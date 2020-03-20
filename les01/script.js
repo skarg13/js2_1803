@@ -10,7 +10,10 @@ const  renderGoodsItem = (title, price) => {
 };
 
 const renderGoodsList = (list) => {
-  let goodsList = list.map(item => renderGoodsItem(item.title, item.price));
+  // запятая между элементами корзины из-за того, что map создает новый массив, а
+  // toString склеивает элементы массива в строку через запятую. Поэтому добавим join(""),
+  // чтобы убрать ненужные нам запятые в верстке
+  let goodsList = list.map(item => renderGoodsItem(item.title, item.price)).join("");
   document.querySelector('.goods-list').innerHTML = goodsList;
 };
 
