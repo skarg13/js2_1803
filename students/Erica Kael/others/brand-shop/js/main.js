@@ -5,7 +5,6 @@ const goods = [
     { title: 'Vine  People  T-shirt', price: 38},
   ];
 
-  
   const renderGoodsItem = (title, price, img = 'img/pi-5.png') => {
     return ` <div class="product__item">
     <a href="product-page.html"><img src="${img}" alt="" class="product__photo"></a>
