@@ -155,5 +155,8 @@
     }
  }
 
+ export default function app() {
+  console.log('jobs done!')
  catalog.construct (cart) //тут происходит создание объекта и вся прочая магия
  cart.construct ()
+ }
