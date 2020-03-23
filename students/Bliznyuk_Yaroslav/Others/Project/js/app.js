@@ -80,7 +80,7 @@ var cartController = (function() {
                     <td class="d-flex">
                       <input type="number" class="form-control col-5" 
                             data-target="${this.product_id}" value="${this.quantity}">
-                      <button type="button" class="btn btn-outline-dark ml-2" 
+                      <button type="button" class="btn btn-outline-dark ml-2 btn-cart-item-del" 
                             data-target="${this.product_id}">Delete</button>
                     </td>
                     <td>${this.price}</td>
@@ -103,7 +103,7 @@ var cartController = (function() {
             }
             return false;
         }
-        addItem(id) {
+        addItemById(id) {
             var indexOfItemId = this.getIndexOfItemId(id);
             if (indexOfItemId !== false) {
                 this.items[indexOfItemId].quantity += 1;
@@ -117,8 +117,9 @@ var cartController = (function() {
                 });
             }
         }
-        deleteItem(id) {
-
+        deleteItemById(id) {
+            var indexOfItemId = this.getIndexOfItemId(id);
+            this.items.splice(indexOfItemId, 1);
         }
         getCartTotal() {
             var total = 0;
@@ -180,12 +181,45 @@ var controller = (function(goodsCtrl, cartCtrl) {
     var ctrlAddItemToCart = function(event) {
         if (event.target.classList.contains('btn_card_bay')) {
             cart = cartCtrl.getCart();
-            cart.addItem(parseInt(event.target.id));
+            cart.addItemById(parseInt(event.target.id));
             cart.render();
+            setupCartRowsEventListeners();
             console.log(cart.items);
 
         }
     };
+
+    var setupCartRowsEventListeners = function() {
+        var $deleteCartRowButtons = document.querySelectorAll("#cartTable .btn-cart-item-del");
+        //console.log($deleteCartRowButtons);
+        for (var i = 0; i < $deleteCartRowButtons.length; i++) {
+            $deleteCartRowButtons[i].addEventListener('click', handleDeleteCartRowButtonClick);
+        }
+        var $inputCartQuantityFields = document.querySelectorAll("#cartTable input");
+        for (var i = 0; i < $inputCartQuantityFields.length; i++) {
+            $inputCartQuantityFields[i].addEventListener('change', handleInputCartQuantityFieldChange);
+        }
+    };
+
+    var handleDeleteCartRowButtonClick = function(event) {
+        var product_id = parseInt(event.target.dataset.target);
+        var cart = cartCtrl.getCart();
+        cart.deleteItemById(product_id);
+        cart.render();
+        setupCartRowsEventListeners();
+    }
+
+    function handleInputCartQuantityFieldChange(event) {
+        //console.log(event.target.dataset.target);
+        //console.log(event.target.value);
+        var product_id = parseInt(event.target.dataset.target);
+        var productCartNewQuantity = parseInt(event.target.value);
+        var cart = cartCtrl.getCart();
+        var productCartIndex = cart.getIndexOfItemId(product_id);
+        cart.items[productCartIndex].quantity = productCartNewQuantity;
+        cart.render();
+        setupCartRowsEventListeners();
+    }
 
     return {
         init: function() {
