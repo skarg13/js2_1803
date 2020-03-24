@@ -10,8 +10,68 @@
  'https://images-na.ssl-images-amazon.com/images/I/81PLqxtrJ3L._SX466_.jpg']
 
  //let products = [] //массив объектов
+
+ class Catalog{
+     constructor(){
+         this.items = [];
+         this.container = '.products';
+         this.cart = null;
+     }
+     construct (cart) {
+        this.cart = cart
+        this._init () //_ - это обозначение инкапсулированного метода
+    }
+    _init () {
+        this._handleData ()
+        this.render ()
+        this._handleEvents ()
+    }
+    _handleEvents () {
+        document.querySelector (this.container).addEventListener ('click', (evt) => {
+            if (evt.target.name === 'buy-btn') {
+                this.cart.addProduct (evt.target)
+            }
+        })
+    }
+    _handleData () {
+        for (let i = 0; i < IDS.length; i++) {
+            this.items.push (this._createNewProduct (i))
+        }
+    }
+    _createNewProduct (index) {
+        return {
+            product_name: PRODUCTS_NAMES [index],
+            price: PRICES [index],
+            id_product: IDS [index],
+            img: IMGS [index]
+        }
+    }
+    render () {
+        let str = ''
+        this.items.forEach (item => {
+            str += `
+                <div class="product-item">
+                    <img src="https://placehold.it/300x200" alt="${item.product_name}">
+                    <!--img src="${item.img}" width="300" height="200" alt="${item.product_name}"-->
+                    <div class="desc">
+                        <h1>${item.product_name}</h1>
+                        <p>${item.price}</p>
+                        <button 
+                        class="buy-btn" 
+                        name="buy-btn"
+                        data-name="${item.product_name}"
+                        data-price="${item.price}"
+                        data-id="${item.id_product}"
+                        >Купить</button>
+                    </div>
+                </div>
+            `
+        })
+        document.querySelector(this.container).innerHTML = str
+     }
+ }
  
- let catalog = {
+ /*let catalog = {
     items: [],
     container: '.products',
     cart: null,
@@ -67,7 +127,7 @@
         })
         document.querySelector(this.container).innerHTML = str
      }
- }
+ }*/
 
  let cart = {
     items: [],
@@ -154,6 +214,8 @@
         this.priceBlock.innerText = this.sum
     }
  }
+
+ const catalog = new Catalog();
 
  export default function app(){
      console.log('Jobs done!')
