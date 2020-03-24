@@ -90,10 +90,34 @@
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("\n\n//# sourceURL=webpack:///./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _public_js_app_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./public/js/app.js */ \"./src/public/js/app.js\");\n/* harmony import */ var _public_style_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./public/style/style.css */ \"./src/public/style/style.css\");\n/* harmony import */ var _public_style_style_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_public_style_style_css__WEBPACK_IMPORTED_MODULE_1__);\n\r\n\r\n\r\nObject(_public_js_app_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])()\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/public/js/app.js":
+/*!******************************!*\
+  !*** ./src/public/js/app.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return app; });\nclass GoodsItem {\r\n    constructor(title, price, img) {\r\n        this.title = title;\r\n        this.price = price;\r\n        this.img = img;\r\n    }\r\n    render() {\r\n        return `<div class=\"goods-item\">\r\n                    <img class=\"goods-item_img\" src=\"${this.img}\"  alt=\"product\">\r\n                    <h3>${this.title}</h3>\r\n                    <p class=\"textP\">${this.price}</p>\r\n        </div>`;\r\n    }\r\n}\r\n\r\nclass GoodsList {\r\n    constructor() {\r\n        this.goods = [];\r\n    }\r\n    fetchGoods() {\r\n        this.goods = [\r\n            { title: 'Shirt', price: 150, img: 'img/Product_1.png' },\r\n            { title: 'Socks', price: 50, img: 'img/Product_2.png' },\r\n            { title: 'Jacket', price: 350, img: 'img/Product_3.png' },\r\n            { title: 'Shoes', price: 250, img: 'img/Product_4.png' },\r\n        ];\r\n    }\r\n    render() {\r\n        let listHtml = '';\r\n        this.goods.forEach(good => {\r\n            const goodItem = new GoodsItem(good.title, good.price);\r\n            listHtml += goodItem.render();\r\n        });\r\n        document.querySelector('.goods-list').innerHTML = listHtml;\r\n    }\r\n}\r\n\r\n    const list = new GoodsList();\r\n    list.fetchGoods();\r\n    list.render();\r\n\r\n\r\n    function app() {\r\n        console.log('Jobs done!')\r\n        const list = new GoodsList();\r\n        list.fetchGoods();\r\n        list.render();\r\n     }\n\n//# sourceURL=webpack:///./src/public/js/app.js?");
+
+/***/ }),
+
+/***/ "./src/public/style/style.css":
+/*!************************************!*\
+  !*** ./src/public/style/style.css ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/public/style/style.css?");
 
 /***/ })
 
