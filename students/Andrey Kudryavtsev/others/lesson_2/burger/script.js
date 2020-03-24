@@ -2,14 +2,25 @@
 
 let form = document.querySelector ('#burgerForm')
 let btn = document.querySelector ('#okBtn')
-//let burgers = []
 let newBurger = {}
+
+const price = [
+    [100, 50],
+    [10, 20, 15],
+    [15, 20]
+]
+
+const calories = [
+    [40, 20],
+    [20, 5, 10],
+    [0, 5]
+]
+     
 
 btn.addEventListener ('click', addBurger)
 
 function addBurger(){
     newBurger = new Burger ('Size','Filling','Option')
-    //burgers.push(newBurger)
     newBurger.renderPrice()
     newBurger.renderCalories()
 }
@@ -35,67 +46,39 @@ class Burger {
         return arr
     }
 
-    calcPrice (){
-        let price = 0
+    calc (array){
+        let result = 0
             if (this.Size == 'big'){
-                price = 100
+                result = array[0][0]
             }
             if (this.Size == 'small'){
-                price = 50
+                result = array[0][1]
             }
             if (this.Filling == 'chees'){
-                price += 10
+                result += array[1][0]
             }
             if (this.Filling == 'salad'){
-                price += 20
+                result += array[1][1]
             }
             if (this.Filling == 'potato'){
-                price += 15
+                result += array[1][2]
             }
             this.Option.forEach (el => {
                 if (el == 'spice'){
-                    price += 15
+                    result += array[2][0]
                 }
                 if (el == 'mayo') {
-                    price += 20
+                    result += array[2][1]
                 }
             })
-        return price
-    }
-    
-    calcCalories(){
-        let calories = 0
-        if (this.Size == 'big'){
-            calories = 40
-        }
-        if (this.Size == 'small'){
-            calories = 20
-        }
-        if (this.Filling == 'chees'){
-            calories += 20
-        }
-        if (this.Filling == 'salad'){
-            calories += 5
-        }
-        if (this.Filling == 'potato'){
-            calories += 10
-        }
-        this.Option.forEach (el => {
-            if (el == 'spice'){
-                calories += 0
-            }
-            if (el == 'mayo') {
-                calories += 5
-            }
-        })
-        return calories
+        return result
     }
 
     renderPrice(){
-        document.querySelector('.price').innerHTML = this.calcPrice()
+        document.querySelector('.price').innerHTML = this.calc(price)
     }
 
     renderCalories(){
-        document.querySelector('.calories').innerHTML = this.calcCalories()
+        document.querySelector('.calories').innerHTML = this.calc(calories)
     }
 }
