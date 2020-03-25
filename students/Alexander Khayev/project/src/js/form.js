@@ -44,8 +44,8 @@ function getPropsInForm(formSelectorStr) {
           if (!(lowerName in obj)) {
             obj[lowerName] = { value: []};
           }
-          obj[lowerName].value.push(item.value);
-          pushDataProps(obj[lowerName], item);
+          obj[lowerName].value.push({value: item.value});
+          pushDataProps(obj[lowerName].value[obj[lowerName].value.length-1], item);
         }
         break;
     }
