@@ -1,5 +1,6 @@
 let miniCss = require('mini-css-extract-plugin')
 let htmlPlugin = require('html-webpack-plugin')
+
 module.exports = {
     module: {
         rules: [
@@ -9,8 +10,6 @@ module.exports = {
                     {
                       loader: miniCss.loader,
                       options: {
-                        // you can specify a publicPath here
-                        // by default it uses publicPath in webpackOptions.output
                         publicPath: '../',
                         hmr: process.env.NODE_ENV === 'development',
                       },
