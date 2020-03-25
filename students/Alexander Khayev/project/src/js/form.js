@@ -7,11 +7,11 @@
  */
 function getPropsInForm(formSelectorStr) {
 
-  const pushDataProps = (obj, item) => {
+  const pushDataProps = (prop, item) => {
     for (let i = 0; i < item.attributes.length; ++i) {
       let name = item.attributes.item(i).name;
       if (name.includes("data-")) {
-        obj[name.toLowerCase()] = item.getAttribute(name);
+        prop[name.toLowerCase()] = item.getAttribute(name);
       }
     }
   }
@@ -22,30 +22,30 @@ function getPropsInForm(formSelectorStr) {
   for (let item of data) {
     let lowerName = item.name.toLowerCase();
     if (item.tagName === "TEXTAREA") {
-      obj[lowerName] = item.textContent;
-      pushDataProps(obj, item);
+      obj[lowerName] = { value: item.textContent };
+      pushDataProps(obj[lowerName], item);
       continue;
     }
     switch (item.type) {
       case 'text':
       case 'option':
-        obj[lowerName] = item.value;
-        pushDataProps(obj, item);
+        obj[lowerName] = { value: item.value};
+        pushDataProps(obj[lowerName], item);
         break;
       case 'radio':
         // если ни один из радиобоксов не установлен, то по умолчанию принимается за решение первый попавшийся элемент
         if (item.checked || !(lowerName in obj)) {
-          obj[lowerName] = item.value;
-          pushDataProps(obj, item);
+          obj[lowerName] = { value: item.value };
+          pushDataProps(obj[lowerName], item);
         }
         break;
       case 'checkbox':
         if (item.checked) {
           if (!(lowerName in obj)) {
-            obj[lowerName] = [];
+            obj[lowerName] = { value: []};
           }
-          obj[lowerName].push(item.value);
-          pushDataProps(obj, item);
+          obj[lowerName].value.push(item.value);
+          pushDataProps(obj[lowerName], item);
         }
         break;
     }
