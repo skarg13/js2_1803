@@ -11,33 +11,31 @@
 
  //let products = [] //массив объектов
  
-
-
- class Catalog {
-    items = []
-    container = '.products'
-    cart = null
+ let catalog = {
+    items: [],
+    container: '.products',
+    cart: null,
     construct (cart) {
         this.cart = cart
         this._init () //_ - это обозначение инкапсулированного метода
-    }
+    },
     _init () {
         this._handleData ()
         this.render ()
         this._handleEvents ()
-    }
+    },
     _handleEvents () {
         document.querySelector (this.container).addEventListener ('click', (evt) => {
             if (evt.target.name === 'buy-btn') {
                 this.cart.addProduct (evt.target)
             }
         })
-    }
+    },
     _handleData () {
         for (let i = 0; i < IDS.length; i++) {
             this.items.push (this._createNewProduct (i))
         }
-    }
+    },
     _createNewProduct (index) {
         return {
             product_name: PRODUCTS_NAMES [index],
@@ -45,7 +43,7 @@
             id_product: IDS [index],
             img: IMGS [index]
         }
-    }
+    },
     render () {
         let str = ''
         this.items.forEach (item => {
@@ -71,26 +69,26 @@
      }
  }
 
-  class Cart {
-    items = []
-    total = 0
-    sum = 0
-    container = '.cart-block'
-    quantityBlock = document.querySelector ('#quantity')
-    priceBlock = document.querySelector ('#price')
+ let cart = {
+    items: [],
+    total: 0,
+    sum: 0,
+    container: '.cart-block',
+    quantityBlock: document.querySelector ('#quantity'),
+    priceBlock: document.querySelector ('#price'),
     construct () {
         this._init ()
-    }
+    },
     _init () {
         this._handleEvents ()
-    }
+    },
     _handleEvents () {
         document.querySelector (this.container).addEventListener ('click', (evt) => {
             if (evt.target.name === 'del-btn') {
                 this.deleteProduct (evt.target)
             }
         })
-    }
+    },
     addProduct (product) {
         let id = product.dataset['id']
         let find = this.items.find (product => product.id_product === id)
@@ -103,7 +101,7 @@
          
         this._checkTotalAndSum ()
         this.render ()
-    }
+    },
     _createNewProduct (prod) {
         return {
             product_name: prod.dataset['name'],
@@ -111,7 +109,7 @@
             id_product: prod.dataset['id'],
             quantity: 1
         }
-    }
+    },
     deleteProduct (product) {
         let id = product.dataset['id']
         let find = this.items.find (product => product.id_product === id)
@@ -123,7 +121,7 @@
          
         this._checkTotalAndSum ()
         this.render ()
-    }
+    },
     
     _checkTotalAndSum () {
         let qua = 0
@@ -134,7 +132,7 @@
         })
         this.total = qua
         this.sum = pr
-    }
+    },
     render () {
         let itemsBlock = document.querySelector (this.container).querySelector ('.cart-items')
         let str = ''
@@ -155,8 +153,13 @@
         this.quantityBlock.innerText = this.total
         this.priceBlock.innerText = this.sum
     }
-}
+ }
 
-    let cart = new Cart()
-    let catalog = new Catalog().construct(cart)
+ catalog.construct (cart) //тут происходит создание объекта и вся прочая магия
+ cart.construct ()
 
+ export default function app() {
+    console.log('Jobs done!')
+    catalog.construct (cart) //тут происходит создание объекта и вся прочая магия
+    cart.construct ()
+ }
