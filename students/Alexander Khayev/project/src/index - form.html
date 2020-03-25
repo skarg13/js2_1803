@@ -15,8 +15,8 @@
       margin-bottom: 10px;
     }
   </style>
-  <script src="js/form.js"></script>
-  <script src="js/person.js"></script>
+  <script src="js/form.js">// *********** Alex Khayev code</script>
+  <script src="js/person.js">// *********** Alex Khayev code</script>
 </head>
 <body>
 <form action="#" id="uForm">
@@ -56,17 +56,17 @@
 <script>
   let btn = document.querySelector('#okBtn')
   let users = []
-  let myPersons = []
+  let myPersons = []  // *********** Alex Khayev code
 
   btn.addEventListener('click', addUser)
 
   function addUser() {
-    try {
-      myPersons.push(new Person(getPropsInForm("#uForm")));
-      console.log('myPersons', myPersons);
-    } catch (e) {
-      alert(e.message);
-    }
+    try {                                                       // *********** Alex Khayev code
+      myPersons.push(new Person(getPropsInForm("#uForm")));     // *********** Alex Khayev code
+      console.log('myPersons', myPersons);                      // *********** Alex Khayev code
+    } catch (e) {                                               // *********** Alex Khayev code
+      alert(e.message);                                         // *********** Alex Khayev code
+    }                                                           // *********** Alex Khayev code
     let newUser = new User('Name', 'Age', 'Gender', 'Hobbies')
     users.push(newUser)
     console.log('users', users);
@@ -107,48 +107,6 @@
     }
   }
 
-  // class Human {
-  //     constructor (nam, ag, gen) {
-  //         this.name = nam
-  //         this.age = ag
-  //         this.gender = gen ? 'male' : 'female'
-  //         this.married = false
-  //         this.partner = null
-  //     }
-  //     goWork () {
-  //         console.log (`${this.name} goes work.`)
-  //     }
-  //     getMarried (pers) {
-  //         if (!this.married && !pers.married) {
-  //             this.married = true
-  //             this.partner = pers
-  //             pers.getMarried (this)
-  //         } else {
-  //             console.log (`${this.name} is already married with ${this.partner.name}`)
-  //         }
-  //     }
-  // }
-
-  // let oleg = new Human ('Oleg', 23, 1)
-  // let sopha = new Human ('Sophia', 22, 0)
-
-  // class NewClass {
-  //     constructor () {
-  //         this.prop = 100
-  //         this.prop2 = 200
-  //         this.method ()
-  //     }
-  //     method () {
-  //         console.log (123)
-  //     }
-
-  // }
-  // function some (par1, par2) {
-  //     return {
-  //         p1: par1,
-  //         p2: par2
-  //     }
-  // }
 
 </script>
 </body>
