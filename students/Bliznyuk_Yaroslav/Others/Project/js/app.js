@@ -1,5 +1,36 @@
 
-var goodsController = (function() {
+var apiController = (function() {
+
+    
+    const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
+
+    var cb = function (data) {
+        data = JSON.parse(data);
+        console.log(data);
+        return data;
+    }
+
+    return {
+        makeGETRequest: function (url) {
+            let xhr = new XMLHttpRequest();
+    
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    cb(xhr.responseText);
+                }
+            }
+    
+            xhr.open('GET', API_URL + url, true);
+            xhr.send();
+        }
+    };
+})();
+
+
+
+
+
+var goodsController = (function(apiCtrl) {
     class GoodsItem {
         constructor(id, title, price) {
             this.id = id;
@@ -36,6 +67,18 @@ var goodsController = (function() {
                 {id: 4, title: 'Product-4', price: 500},
             ]
         }
+        fetchGoodsAPI() {
+            let goods_from_api = apiCtrl.makeGETRequest('catalogData.json')//, (goods) => {
+                // let goods_from_api = JSON.parse(goods);
+                goods_from_api.forEach(function(currant) {
+                    this.goods.push({
+                        id: currant.id_product,
+                        title: currant.product_name,
+                        price: currant.price
+                    });
+                });
+            //}//);
+        }
         render() {
             let listHtml = '';
             this.goods.forEach(good => {
@@ -54,14 +97,15 @@ var goodsController = (function() {
         }
     }
     var goodsList = new GoodsList();
-    goodsList.fetchGoods();
+    // goodsList.fetchGoods();
+    goodsList.fetchGoodsAPI();
 
     return {
         getGoodsList: function() {
             return goodsList;
         }
     };
-})();
+})(apiController);
 
 var cartController = (function() {
     class CartItem {
