@@ -45,7 +45,7 @@ class Catalog{
      * @param {Object} product
      */
     renderProduct(product){
-        let newProduct = `<div class="product"  data-id="${product.id}">
+        let newProduct = `<div class="product"  data-id="${product.id}" data-price="${product.price}">
             <img src="${product.src}" alt="${product.name}" class="product__img">
             <p class="product__name">${product.name}</p>
             <p class="product__price">${product.price} &#8381;</p>
