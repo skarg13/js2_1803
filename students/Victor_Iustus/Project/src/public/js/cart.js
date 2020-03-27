@@ -103,5 +103,13 @@ export default class Cart {
         this.quantityBlock.innerText = this.total
         this.priceBlock.innerText = this.sum
     }
+
+    //GoodsList () {
+    //    let pr = 0
+    //    this.items.forEach (item => {
+    //        pr += item.price * item.quantity
+    //    })
+    //    this.sum = pr
+    //}
 }
 
