@@ -123,7 +123,7 @@ var cartController = (function(apiCtrl) {
                     <th scope="row">${row_num}</th>
                     <td class="">${this.product_name}</td>
                     <td class="d-flex">
-                      <input type="number" class="form-control col-5" 
+                      <input type="number" class="form-control col-5 cart-row-quantity" 
                             data-target="${this.product_id}" value="${this.quantity}">
                       <button type="button" class="btn btn-outline-dark ml-2 btn-cart-item-del" 
                             data-target="${this.product_id}">Delete</button>
@@ -196,7 +196,7 @@ var cartController = (function(apiCtrl) {
                             price: item.price,
                             quantity: item.quantity
                         });  
-                        console.log(cart.items[index]);  
+                        // console.log(cart.items[index]);  
                     });
                 })
                 .then(() => cart.render())
@@ -247,6 +247,7 @@ var controller = (function(goodsCtrl, cartCtrl) {
     var setupEventListeners = function() {
         // Bay button:
         document.querySelector('#catalog').addEventListener('click', ctrlAddItemToCart);
+        document.querySelector('#cartTable').addEventListener('click', handleCartRowElementsClick);
     };
 
     var ctrlAddItemToCart = function(event) {
@@ -254,42 +255,29 @@ var controller = (function(goodsCtrl, cartCtrl) {
             cart = cartCtrl.getCart();
             cart.addItemById(parseInt(event.target.id));
             cart.render();
-            setupCartRowsEventListeners();
-            console.log(cart.items);
+            // console.log(cart.items);
 
         }
     };
 
-    var setupCartRowsEventListeners = function() {
-        var $deleteCartRowButtons = document.querySelectorAll("#cartTable .btn-cart-item-del");
-        //console.log($deleteCartRowButtons);
-        for (var i = 0; i < $deleteCartRowButtons.length; i++) {
-            $deleteCartRowButtons[i].addEventListener('click', handleDeleteCartRowButtonClick);
-        }
-        var $inputCartQuantityFields = document.querySelectorAll("#cartTable input");
-        for (var i = 0; i < $inputCartQuantityFields.length; i++) {
-            $inputCartQuantityFields[i].addEventListener('change', handleInputCartQuantityFieldChange);
-        }
-    };
+    var handleCartRowElementsClick = function(event) {
+        // console.log(event.target);
+        if (event.target.type == 'number' && event.target.classList.contains('cart-row-quantity')) {
+            console.log(event.target);
+            let product_id = parseInt(event.target.dataset.target);
+            let productCartNewQuantity = parseInt(event.target.value);
+            let cart = cartCtrl.getCart();
+            let productCartIndex = cart.getIndexOfItemId(product_id);
+            cart.items[productCartIndex].quantity = productCartNewQuantity;
+            cart.render();
 
-    var handleDeleteCartRowButtonClick = function(event) {
-        var product_id = parseInt(event.target.dataset.target);
-        var cart = cartCtrl.getCart();
-        cart.deleteItemById(product_id);
-        cart.render();
-        setupCartRowsEventListeners();
-    }
-
-    function handleInputCartQuantityFieldChange(event) {
-        //console.log(event.target.dataset.target);
-        //console.log(event.target.value);
-        var product_id = parseInt(event.target.dataset.target);
-        var productCartNewQuantity = parseInt(event.target.value);
-        var cart = cartCtrl.getCart();
-        var productCartIndex = cart.getIndexOfItemId(product_id);
-        cart.items[productCartIndex].quantity = productCartNewQuantity;
-        cart.render();
-        setupCartRowsEventListeners();
+        } else if (event.target.type == 'button' && event.target.classList.contains('btn-cart-item-del')) {
+            console.log(event.target);
+            let product_id = parseInt(event.target.dataset.target);
+            let cart = cartCtrl.getCart();
+            cart.deleteItemById(product_id);
+            cart.render();
+        }
     }
 
     return {
