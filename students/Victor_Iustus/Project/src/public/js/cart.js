@@ -1,13 +1,13 @@
 
-class Cart {
-    items = []
-    total = 0
-    sum = 0
-    container = '.cart-block'
-    quantityBlock = '#quantity'
-    priceBlock = '#price'
+export default class Cart {
 
     constructor () {
+        this.items = []
+        this.total = 0
+        this.sum = 0
+        this.cartBlock = document.querySelector ('#cart-block')
+        this.quantityBlock = document.querySelector ('#quantity')
+        this.priceBlock = document.querySelector ('#price')
         this._init ()
     }
 
@@ -16,9 +16,12 @@ class Cart {
     }
 
     _handleEvents () {
-        document.querySelector (this.container).addEventListener ('click', (evt) => {
-            if (evt.target.name === 'del-btn') {
+        this.cartBlock.addEventListener ('click', (evt) => {
+            if (evt.target.name === 'btn-del') {
                 this.deleteProduct (evt.target)
+            }
+            if (evt.target.name === 'cart-cleaner') {
+                this.clearProducts ()
             }
         })
     }
@@ -58,7 +61,6 @@ class Cart {
         this._checkTotalAndSum ()
         this.render ()
     }
-
     _checkTotalAndSum () {
         let qua = 0
         let pr = 0
@@ -68,21 +70,32 @@ class Cart {
         })
         this.total = qua
         this.sum = pr
+        if (this.total) {
+            this.cartBlock.classList.remove("d-hidden")
+        } else {
+            this.cartBlock.classList.add("d-hidden")
+        }
+    }
+
+    clearProducts () {
+        this.items = []
+        this._checkTotalAndSum ()
+        this.render ()
     }
 
     render () {
-        let itemsBlock = document.querySelector (this.container).querySelector ('.cart-items')
+        let itemsBlock = this.cartBlock.querySelector ('.cart-items')
         let str = ''
         this.items.forEach (item => {
             str += `<div class="cart-item" data-id="${item.id_product}">
                     <img src="https://placehold.it/100x80" alt="">
                     <div class="product-desc">
                         <p class="product-title">${item.product_name}</p>
-                        <p class="product-quantity">${item.quantity}</p>
-                        <p class="product-single-price">${item.price}</p>
+                        <p class="product-quantity">Количество: ${item.quantity}</p>
+                        <p class="product-single-price">Цена: ${item.price}</p>
                     </div>
                     <div class="right-block">
-                        <button name="del-btn" class="del-btn" data-id="${item.id_product}">&times;</button>
+                        <button name="btn-del" class="btn -black" data-id="${item.id_product}">&times;</button>
                     </div>
                 </div>`
         })
@@ -90,7 +103,5 @@ class Cart {
         this.quantityBlock.innerText = this.total
         this.priceBlock.innerText = this.sum
     }
-
 }
 
-export default new Cart()
