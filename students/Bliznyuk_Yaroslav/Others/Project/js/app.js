@@ -76,7 +76,7 @@ var goodsController = (function(apiCtrl) {
                 })
                 .then(() => goodsList.render())
                 .catch(error => {
-                    console.log(`Get an error: ${error}`);
+                    console.log(`Get an error (goods): ${error}`);
 
                 });
         }
@@ -108,7 +108,7 @@ var goodsController = (function(apiCtrl) {
     };
 })(apiController);
 
-var cartController = (function() {
+var cartController = (function(apiCtrl) {
     class CartItem {
         constructor(product_id, product_name, price, quantity) {
             this.product_id = product_id;
@@ -182,6 +182,29 @@ var cartController = (function() {
             }
             return totalCost;
         }
+        fetchCartAPI() {
+            let cart = this;
+            apiCtrl.makeGETRequest('getBasket.json')
+                .then(data => {
+                    data = JSON.parse(data);
+                    cart.amount = data.amount;
+                    cart.countGoods = data.countGoods;
+                    data.contents.forEach(function(item, index) {
+                        cart.items.push({
+                            product_id: item.id_product,
+                            product_name: item.product_name,
+                            price: item.price,
+                            quantity: item.quantity
+                        });  
+                        console.log(cart.items[index]);  
+                    });
+                })
+                .then(() => cart.render())
+                .catch(error => {
+                    console.log(`Get an error (cart): ${error}`);
+
+                });
+        }
         render() {
             var $cart_info = document.getElementById("cart-info");
             if (this.items.length > 0) {
@@ -208,7 +231,8 @@ var cartController = (function() {
             }
         }
     }
-    var cart = new Cart();   
+    var cart = new Cart();
+    cart.fetchCartAPI();   
 
     return {
         getCart: function() {
@@ -216,7 +240,7 @@ var cartController = (function() {
         }
     };
 
-})();
+})(apiController);
 
 // APP MAIN CONTROLLER
 var controller = (function(goodsCtrl, cartCtrl) {
@@ -271,6 +295,7 @@ var controller = (function(goodsCtrl, cartCtrl) {
     return {
         init: function() {
             goodsCtrl.getGoodsList();
+            cartCtrl.getCart();
             setupEventListeners();
         }
     }
