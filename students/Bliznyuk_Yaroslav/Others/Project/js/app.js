@@ -1,33 +1,26 @@
 
 var apiController = (function() {
-
     
     const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
 
-    var cb = function (data) {
-        data = JSON.parse(data);
-        console.log(data);
-        return data;
-    }
-
     return {
         makeGETRequest: function (url) {
-            let xhr = new XMLHttpRequest();
-    
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    cb(xhr.responseText);
-                }
-            }
-    
-            xhr.open('GET', API_URL + url, true);
-            xhr.send();
-        }
-    };
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest();
+                xhr.open('GET', API_URL + url, true);
+                xhr.onload = () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(xhr.response);
+                    } else {
+                        reject(xhr.statusText);
+                    }
+                };
+                xhr.onerror = () => reject(xhr.statusText);
+                xhr.send();
+            });
+        },
+    }
 })();
-
-
-
 
 
 var goodsController = (function(apiCtrl) {
@@ -68,16 +61,24 @@ var goodsController = (function(apiCtrl) {
             ]
         }
         fetchGoodsAPI() {
-            let goods_from_api = apiCtrl.makeGETRequest('catalogData.json')//, (goods) => {
-                // let goods_from_api = JSON.parse(goods);
-                goods_from_api.forEach(function(currant) {
-                    this.goods.push({
-                        id: currant.id_product,
-                        title: currant.product_name,
-                        price: currant.price
+            let goodsList = this;
+            apiCtrl.makeGETRequest('catalogData.json')
+                .then(data => {
+                    data = JSON.parse(data);
+                    data.forEach(function(item, index) {
+                        goodsList.goods.push({
+                            id: item.id_product,
+                            title: item.product_name,
+                            price: item.price
+                        });  
+                        // console.log(goodsList.goods[index]);  
                     });
+                })
+                .then(() => goodsList.render())
+                .catch(error => {
+                    console.log(`Get an error: ${error}`);
+
                 });
-            //}//);
         }
         render() {
             let listHtml = '';
@@ -135,6 +136,8 @@ var cartController = (function() {
     class Cart {
         constructor() {
             this.items = [];
+            this.amount = 0;
+            this.countGoods = 0;
         }
         getCartItems() {
             return this.items; 
@@ -267,7 +270,7 @@ var controller = (function(goodsCtrl, cartCtrl) {
 
     return {
         init: function() {
-            goodsCtrl.getGoodsList().render();
+            goodsCtrl.getGoodsList();
             setupEventListeners();
         }
     }
