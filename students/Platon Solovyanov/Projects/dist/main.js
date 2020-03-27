@@ -86,42 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/components/comp1.js":
-/*!*********************************!*\
-  !*** ./src/components/comp1.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nlet a = 100;\n/* harmony default export */ __webpack_exports__[\"default\"] = (a);\n\n//# sourceURL=webpack:///./src/components/comp1.js?");
-
-/***/ }),
-
-/***/ "./src/components/comp2.js":
-/*!*********************************!*\
-  !*** ./src/components/comp2.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nlet b = 200;\n/* harmony default export */ __webpack_exports__[\"default\"] = (b);\n\n//# sourceURL=webpack:///./src/components/comp2.js?");
-
-/***/ }),
-
-/***/ "./src/components/index.js":
-/*!*********************************!*\
-  !*** ./src/components/index.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _comp1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./comp1 */ \"./src/components/comp1.js\");\n/* harmony import */ var _comp2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./comp2 */ \"./src/components/comp2.js\");\n\n\n\nlet c = _comp1__WEBPACK_IMPORTED_MODULE_0__[\"default\"] + _comp2__WEBPACK_IMPORTED_MODULE_1__[\"default\"];\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (c);\n\n//# sourceURL=webpack:///./src/components/index.js?");
-
-/***/ }),
-
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -130,7 +94,29 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _com
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components */ \"./src/components/index.js\");\n\n\nconsole.log(_components__WEBPACK_IMPORTED_MODULE_0__[\"default\"])\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _public_style_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./public/style/style.css */ \"./src/public/style/style.css\");\n/* harmony import */ var _public_style_style_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_public_style_style_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _public_style_normalize_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./public/style/normalize.css */ \"./src/public/style/normalize.css\");\n/* harmony import */ var _public_style_normalize_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_public_style_normalize_css__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n// import Common from './public/js/Сommon'\n// import Cart from './public/js/Cart'\n// import Catalog from './public/js/Catalog'\n\n\n\n// import Cart from './public/js/Cart'\n// import Catalog from './public/js/Catalog'\n\n// const cart = new Cart()\n// const catalog = new Catalog()\n// console.log(cart)\n// console.log(catalog)\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/public/style/normalize.css":
+/*!****************************************!*\
+  !*** ./src/public/style/normalize.css ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/public/style/normalize.css?");
+
+/***/ }),
+
+/***/ "./src/public/style/style.css":
+/*!************************************!*\
+  !*** ./src/public/style/style.css ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/public/style/style.css?");
 
 /***/ })
 
