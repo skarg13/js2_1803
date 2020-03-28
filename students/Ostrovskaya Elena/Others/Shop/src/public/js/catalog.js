@@ -1,8 +1,7 @@
 class Catalog{
-    constructor(cart){
+    constructor(){
         this.items = [];
         this.container = document.querySelector ('.products');
-        this.cart = cart;
     }
 
     /**
@@ -10,7 +9,9 @@ class Catalog{
      *
      * @memberof Catalog
      */
-    _init () {  
+    _init (cart) { 
+        this.cart = cart;
+        console.log("catalog");
         this._handleData();
         this.render();
         this._handleEvents();
