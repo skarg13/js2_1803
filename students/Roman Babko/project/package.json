@@ -1,6 +1,7 @@
 {
   "name": "project",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,6 +13,5 @@
   "devDependencies": {
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
-  },
-  "description": ""
+  }
 }
