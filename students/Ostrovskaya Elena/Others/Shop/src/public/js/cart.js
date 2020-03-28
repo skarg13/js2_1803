@@ -13,6 +13,7 @@ class Cart {
      *
      */
     _handleEvents () {
+        console.log("cart");
         this.container.addEventListener ('click', (evt) => {
             if (evt.target.name === 'del-btn') {
                 this.deleteProduct (evt.target)
@@ -115,3 +116,4 @@ class Cart {
         }
     }
 }
+
