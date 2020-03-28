@@ -1,4 +1,4 @@
 **/node_modules/
-
-# ignore PHPStorm files
-.idea*
+**.DS_Store
+**/dist/
+**/.idea
