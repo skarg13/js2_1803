@@ -11,6 +11,21 @@
 
  //let products = [] //массив объектов
 
+ function makeGETRequest(url, callback) {
+    let xhr = new XMLHttpRequest();
+  
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        callback(xhr.responseText);
+      }
+    }
+  
+    xhr.open('GET', url, true);
+    xhr.send();
+  }
+
+  const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
  class Catalog{
      constructor(){
          this.items = [];
@@ -22,9 +37,32 @@
         this._init () //_ - это обозначение инкапсулированного метода
     }
     _init () {
-        this._handleData ()
-        this.render ()
-        this._handleEvents ()
+        let promise = () =>{
+            return new Promise((resolve, reject) => {
+              setTimeout(()=>{
+                this._handleData();
+              },100)
+          
+              setTimeout(()=>{
+                if(this.items.length > 0){
+                  resolve(this.items)
+                }else{
+                  reject('eror')
+                }
+              },200)
+          
+            });
+          
+          } 
+          
+            promise()
+              .then(res =>{
+                this.render ()
+                this._handleEvents ()
+              })
+              .catch(rej => {
+                console.log(rej);
+              })
     }
     _handleEvents () {
         document.querySelector (this.container).addEventListener ('click', (evt) => {
@@ -34,17 +72,9 @@
         })
     }
     _handleData () {
-        for (let i = 0; i < IDS.length; i++) {
-            this.items.push (this._createNewProduct (i))
-        }
-    }
-    _createNewProduct (index) {
-        return {
-            product_name: PRODUCTS_NAMES [index],
-            price: PRICES [index],
-            id_product: IDS [index],
-            img: IMGS [index]
-        }
+        makeGETRequest(`${API_URL}/catalogData.json`, (items) => {
+            this.items = JSON.parse(items);
+          })
     }
     render () {
         let str = ''
@@ -71,84 +101,29 @@
      }
  }
  
- /*let catalog = {
-    items: [],
-    container: '.products',
-    cart: null,
-    construct (cart) {
-        this.cart = cart
-        this._init () //_ - это обозначение инкапсулированного метода
-    },
-    _init () {
-        this._handleData ()
-        this.render ()
-        this._handleEvents ()
-    },
-    _handleEvents () {
-        document.querySelector (this.container).addEventListener ('click', (evt) => {
-            if (evt.target.name === 'buy-btn') {
-                this.cart.addProduct (evt.target)
-            }
-        })
-    },
-    _handleData () {
-        for (let i = 0; i < IDS.length; i++) {
-            this.items.push (this._createNewProduct (i))
-        }
-    },
-    _createNewProduct (index) {
-        return {
-            product_name: PRODUCTS_NAMES [index],
-            price: PRICES [index],
-            id_product: IDS [index],
-            img: IMGS [index]
-        }
-    },
-    render () {
-        let str = ''
-        this.items.forEach (item => {
-            str += `
-                <div class="product-item">
-                    <img src="https://placehold.it/300x200" alt="${item.product_name}">
-                    <!--img src="${item.img}" width="300" height="200" alt="${item.product_name}"-->
-                    <div class="desc">
-                        <h1>${item.product_name}</h1>
-                        <p>${item.price}</p>
-                        <button 
-                        class="buy-btn" 
-                        name="buy-btn"
-                        data-name="${item.product_name}"
-                        data-price="${item.price}"
-                        data-id="${item.id_product}"
-                        >Купить</button>
-                    </div>
-                </div>
-            `
-        })
-        document.querySelector(this.container).innerHTML = str
-     }
- }*/
 
- let cart = {
-    items: [],
-    total: 0,
-    sum: 0,
-    container: '.cart-block',
-    quantityBlock: document.querySelector ('#quantity'),
-    priceBlock: document.querySelector ('#price'),
+ class Cart{
+    constructor(){
+        this.items = [],
+        this.total = 0,
+        this.sum = 0,
+        this.container = '.cart-block',
+        this.quantityBlock = document.querySelector ('#quantity'),
+        this.priceBlock =  document.querySelector ('#price')
+    }
     construct () {
         this._init ()
-    },
+    }
     _init () {
         this._handleEvents ()
-    },
+    }
     _handleEvents () {
         document.querySelector (this.container).addEventListener ('click', (evt) => {
             if (evt.target.name === 'del-btn') {
                 this.deleteProduct (evt.target)
             }
         })
-    },
+    }
     addProduct (product) {
         let id = product.dataset['id']
         let find = this.items.find (product => product.id_product === id)
@@ -161,7 +136,7 @@
          
         this._checkTotalAndSum ()
         this.render ()
-    },
+    }
     _createNewProduct (prod) {
         return {
             product_name: prod.dataset['name'],
@@ -169,7 +144,7 @@
             id_product: prod.dataset['id'],
             quantity: 1
         }
-    },
+    }
     deleteProduct (product) {
         let id = product.dataset['id']
         let find = this.items.find (product => product.id_product === id)
@@ -181,8 +156,7 @@
          
         this._checkTotalAndSum ()
         this.render ()
-    },
-    
+    }
     _checkTotalAndSum () {
         let qua = 0
         let pr = 0
@@ -192,7 +166,7 @@
         })
         this.total = qua
         this.sum = pr
-    },
+    }
     render () {
         let itemsBlock = document.querySelector (this.container).querySelector ('.cart-items')
         let str = ''
@@ -215,7 +189,10 @@
     }
  }
 
+
  const catalog = new Catalog();
+ const cart = new Cart();
+  
 
  export default function app(){
      console.log('Jobs done!')
