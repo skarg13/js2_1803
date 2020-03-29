@@ -1,5 +1,5 @@
-let miniCss = require('mini-css-extract-plugin')
-let htmlPlugin = require('html-webpack-plugin')
+const miniCss       = require('mini-css-extract-plugin')
+const htmlPlugin    = require('html-webpack-plugin')
 
 module.exports = {
     module: {
@@ -16,7 +16,7 @@ module.exports = {
                     },
                     'css-loader',
                 ]
-            }
+            },
         ]
     },
     plugins: [
@@ -26,7 +26,14 @@ module.exports = {
             ignoreOrder: false,
         }), 
         new htmlPlugin({
+            favicon: "./src/favicon.ico",
+            filename: "index.html",
             template: './src/public/index.html'
-        })
-    ]
+        }),
+    ],
+    devServer: {
+        open: true,
+        hot: true,
+        port: 3000
+    }
 }

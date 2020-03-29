@@ -1,9 +1,6 @@
-import cart from './cart'
-import catalog from './catalog'
-
+import run from './base'
 
 export default function app() {
- console.log('Jobs done!')
- catalog.construct (cart) //тут происходит создание объекта и вся прочая магия
- cart.constructor ()
+    console.log('Jobs done!')
+    run()
 }
