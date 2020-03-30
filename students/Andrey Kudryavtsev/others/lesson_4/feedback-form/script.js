@@ -6,7 +6,10 @@ btn.addEventListener ('click', submit)
 
 function submit(){
     feedback = new FeedBack ('name', 'phone', 'email');
-    if (feedback.validateForm()) {
+    let name = feedback.validate('name')
+    let phone = feedback.validate('phone')
+    let email = feedback.validate('email')
+    if (name && email && phone) {
         document.querySelector('.ok-submit').innerHTML = 'Данные отправлены';
     }
 }
@@ -40,9 +43,4 @@ class FeedBack {
             return false
         }
     }
-
-    validateForm(){
-        return this.validate('name') && this.validate('email') && this.validate('phone')
-    }
-
 }
