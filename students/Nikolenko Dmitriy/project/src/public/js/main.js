@@ -9,6 +9,9 @@
  'https://files.sandberg.it/products/images/lg/640-05_lg.jpg',
  'https://images-na.ssl-images-amazon.com/images/I/81PLqxtrJ3L._SX466_.jpg']
 
+ const API_URL = 'https://raw.githubusercontent.com/Dmitriy-Nikolenko/online-store-api/master/responses';
+
+
  //let products = [] //массив объектов
  
  let catalog = {
@@ -157,3 +160,20 @@
 
  catalog.construct (cart) //тут происходит создание объекта и вся прочая магия
  cart.construct ()
+
+ export default function app() {
+    console.log('Jobs done!')
+    catalog.construct (cart) //тут происходит создание объекта и вся прочая магия
+    cart.construct ()
+ }
+ function makeGETRequest(url, callback) {  
+    let  xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        callback(xhr.responseText);
+      }
+    }
+  
+    xhr.open('GET', url, true);
+    xhr.send();
+  }

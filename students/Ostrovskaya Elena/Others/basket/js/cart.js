@@ -133,7 +133,7 @@ class Cart {
             id: product.dataset.id,
             name: product.querySelector('.product__name').innerText,
             src: product.querySelector('img').src,
-            price: product.querySelector('.product__price').innerText,
+            price: product.dataset.price,
             count: 1
         }
     }
@@ -230,11 +230,11 @@ class Cart {
      * @returns {String}
      */
     getProductHTML(objProduct){
-        return  `<div class="goods" data-id="${objProduct.id}">
+        return  `<div class="goods" data-id="${objProduct.id}" data-price="${objProduct.price}">
                     <img src="${objProduct.src}" alt="" class="goods__img">
                     <div class="goods__text">
                         <p class="goods__name">${objProduct.name}</p>
-                        <p class="goods__price">${objProduct.price}</p>
+                        <p class="goods__price">${objProduct.price} &#8381;</p>
                     </div>
                     <input class="goods__count" type="number" min="1" value="${objProduct.count}">
                     <p class = "goods__number">&nbsp;шт</p>

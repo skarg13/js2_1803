@@ -1,1 +1,135 @@
-!function(t){var e={};function n(i){if(e[i])return e[i].exports;var r=e[i]={i:i,l:!1,exports:{}};return t[i].call(r.exports,r,r.exports,n),r.l=!0,r.exports}n.m=t,n.c=e,n.d=function(t,e,i){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)n.d(i,r,function(e){return t[e]}.bind(null,r));return i},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=2)}([function(t,e,n){},function(t,e,n){},function(t,e,n){"use strict";n.r(e);let i=["Processor","Display","Notebook","Mouse","Keyboard"],r=[100,120,1e3,15,18],c=[0,1,2,3,4],o=["https://cs8.pikabu.ru/post_img/big/2017/12/25/5/1514188160141511997.jpg","https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HMUB2?wid=1144&hei=1144&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1563827752399","https://zeon18.ru/files/item/Xiaomi-Mi-Notebook-Air-4G-Officially-Announced-Weboo-co-2%20(1)_1.jpg","https://files.sandberg.it/products/images/lg/640-05_lg.jpg","https://images-na.ssl-images-amazon.com/images/I/81PLqxtrJ3L._SX466_.jpg"],s={items:[],container:".products",cart:null,construct(t){this.cart=t,this._init()},_init(){this._handleData(),this.render(),this._handleEvents()},_handleEvents(){document.querySelector(this.container).addEventListener("click",t=>{"buy-btn"===t.target.name&&this.cart.addProduct(t.target)})},_handleData(){for(let t=0;t<c.length;t++)this.items.push(this._createNewProduct(t))},_createNewProduct:t=>({product_name:i[t],price:r[t],id_product:c[t],img:o[t]}),render(){let t="";this.items.forEach(e=>{t+=`\n                <div class="product-item">\n                    <img src="https://placehold.it/300x200" alt="${e.product_name}">\n                    \x3c!--img src="${e.img}" width="300" height="200" alt="${e.product_name}"--\x3e\n                    <div class="desc">\n                        <h1>${e.product_name}</h1>\n                        <p>${e.price}</p>\n                        <button \n                        class="buy-btn" \n                        name="buy-btn"\n                        data-name="${e.product_name}"\n                        data-price="${e.price}"\n                        data-id="${e.id_product}"\n                        >Купить</button>\n                    </div>\n                </div>\n            `}),document.querySelector(this.container).innerHTML=t}},a={items:[],total:0,sum:0,container:".cart-block",quantityBlock:document.querySelector("#quantity"),priceBlock:document.querySelector("#price"),construct(){this._init()},_init(){this._handleEvents()},_handleEvents(){document.querySelector(this.container).addEventListener("click",t=>{"del-btn"===t.target.name&&this.deleteProduct(t.target)})},addProduct(t){let e=t.dataset.id,n=this.items.find(t=>t.id_product===e);if(n)n.quantity++;else{let e=this._createNewProduct(t);this.items.push(e)}this._checkTotalAndSum(),this.render()},_createNewProduct:t=>({product_name:t.dataset.name,price:t.dataset.price,id_product:t.dataset.id,quantity:1}),deleteProduct(t){let e=t.dataset.id,n=this.items.find(t=>t.id_product===e);n.quantity>1?n.quantity--:this.items.splice(this.items.indexOf(n),1),this._checkTotalAndSum(),this.render()},_checkTotalAndSum(){let t=0,e=0;this.items.forEach(n=>{t+=n.quantity,e+=n.price*n.quantity}),this.total=t,this.sum=e},render(){let t=document.querySelector(this.container).querySelector(".cart-items"),e="";this.items.forEach(t=>{e+=`<div class="cart-item" data-id="${t.id_product}">\n                    <img src="https://placehold.it/100x80" alt="">\n                    <div class="product-desc">\n                        <p class="product-title">${t.product_name}</p>\n                        <p class="product-quantity">${t.quantity}</p>\n                        <p class="product-single-price">${t.price}</p>\n                    </div>\n                    <div class="right-block">\n                        <button name="del-btn" class="del-btn" data-id="${t.id_product}">&times;</button>\n                    </div>\n                </div>`}),t.innerHTML=e,this.quantityBlock.innerText=this.total,this.priceBlock.innerText=this.sum}};s.construct(a),a.construct();n(0),n(1);console.log("Jobs done!"),s.construct(a),a.construct()}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _public_js_main_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./public/js/main.js */ \"./src/public/js/main.js\");\n/* harmony import */ var _public_style_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./public/style/style.css */ \"./src/public/style/style.css\");\n/* harmony import */ var _public_style_style_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_public_style_style_css__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _public_style_normalize_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./public/style/normalize.css */ \"./src/public/style/normalize.css\");\n/* harmony import */ var _public_style_normalize_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_public_style_normalize_css__WEBPACK_IMPORTED_MODULE_2__);\n\r\n\r\n\r\n\r\nObject(_public_js_main_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])()\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/public/js/main.js":
+/*!*******************************!*\
+  !*** ./src/public/js/main.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return app; });\n //ИМИТАЦИЯ РАБОТЫ БАЗЫ ДАННЫХ И СЕРВЕРА\r\n\r\n let PRODUCTS_NAMES = ['Processor', 'Display', 'Notebook', 'Mouse', 'Keyboard']\r\n let PRICES = [100, 120, 1000, 15, 18]\r\n let IDS = [0, 1, 2, 3, 4]\r\n let IMGS = ['https://cs8.pikabu.ru/post_img/big/2017/12/25/5/1514188160141511997.jpg', \r\n 'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HMUB2?wid=1144&hei=1144&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1563827752399',\r\n 'https://zeon18.ru/files/item/Xiaomi-Mi-Notebook-Air-4G-Officially-Announced-Weboo-co-2%20(1)_1.jpg',\r\n 'https://files.sandberg.it/products/images/lg/640-05_lg.jpg',\r\n 'https://images-na.ssl-images-amazon.com/images/I/81PLqxtrJ3L._SX466_.jpg']\r\n\r\n //let products = [] //массив объектов\r\n \r\n let catalog = {\r\n    items: [],\r\n    container: '.products',\r\n    cart: null,\r\n    construct (cart) {\r\n        this.cart = cart\r\n        this._init () //_ - это обозначение инкапсулированного метода\r\n    },\r\n    _init () {\r\n        this._handleData ()\r\n        this.render ()\r\n        this._handleEvents ()\r\n    },\r\n    _handleEvents () {\r\n        document.querySelector (this.container).addEventListener ('click', (evt) => {\r\n            if (evt.target.name === 'buy-btn') {\r\n                this.cart.addProduct (evt.target)\r\n            }\r\n        })\r\n    },\r\n    _handleData () {\r\n        for (let i = 0; i < IDS.length; i++) {\r\n            this.items.push (this._createNewProduct (i))\r\n        }\r\n    },\r\n    _createNewProduct (index) {\r\n        return {\r\n            product_name: PRODUCTS_NAMES [index],\r\n            price: PRICES [index],\r\n            id_product: IDS [index],\r\n            img: IMGS [index]\r\n        }\r\n    },\r\n    render () {\r\n        let str = ''\r\n        this.items.forEach (item => {\r\n            str += `\r\n                <div class=\"product-item\">\r\n                    <img src=\"https://placehold.it/300x200\" alt=\"${item.product_name}\">\r\n                    <!--img src=\"${item.img}\" width=\"300\" height=\"200\" alt=\"${item.product_name}\"-->\r\n                    <div class=\"desc\">\r\n                        <h1>${item.product_name}</h1>\r\n                        <p>${item.price}</p>\r\n                        <button \r\n                        class=\"buy-btn\" \r\n                        name=\"buy-btn\"\r\n                        data-name=\"${item.product_name}\"\r\n                        data-price=\"${item.price}\"\r\n                        data-id=\"${item.id_product}\"\r\n                        >Купить</button>\r\n                    </div>\r\n                </div>\r\n            `\r\n        })\r\n        document.querySelector(this.container).innerHTML = str\r\n     }\r\n }\r\n\r\n let cart = {\r\n    items: [],\r\n    total: 0,\r\n    sum: 0,\r\n    container: '.cart-block',\r\n    quantityBlock: document.querySelector ('#quantity'),\r\n    priceBlock: document.querySelector ('#price'),\r\n    construct () {\r\n        this._init ()\r\n    },\r\n    _init () {\r\n        this._handleEvents ()\r\n    },\r\n    _handleEvents () {\r\n        document.querySelector (this.container).addEventListener ('click', (evt) => {\r\n            if (evt.target.name === 'del-btn') {\r\n                this.deleteProduct (evt.target)\r\n            }\r\n        })\r\n    },\r\n    addProduct (product) {\r\n        let id = product.dataset['id']\r\n        let find = this.items.find (product => product.id_product === id)\r\n        if (find) {\r\n            find.quantity++\r\n        } else {\r\n            let prod = this._createNewProduct (product)\r\n            this.items.push (prod)\r\n        }\r\n         \r\n        this._checkTotalAndSum ()\r\n        this.render ()\r\n    },\r\n    _createNewProduct (prod) {\r\n        return {\r\n            product_name: prod.dataset['name'],\r\n            price: prod.dataset['price'],\r\n            id_product: prod.dataset['id'],\r\n            quantity: 1\r\n        }\r\n    },\r\n    deleteProduct (product) {\r\n        let id = product.dataset['id']\r\n        let find = this.items.find (product => product.id_product === id)\r\n        if (find.quantity > 1) {\r\n            find.quantity--\r\n        } else {\r\n            this.items.splice (this.items.indexOf(find), 1)\r\n        }\r\n         \r\n        this._checkTotalAndSum ()\r\n        this.render ()\r\n    },\r\n    \r\n    _checkTotalAndSum () {\r\n        let qua = 0\r\n        let pr = 0\r\n        this.items.forEach (item => {\r\n            qua += item.quantity\r\n            pr += item.price * item.quantity\r\n        })\r\n        this.total = qua\r\n        this.sum = pr\r\n    },\r\n    render () {\r\n        let itemsBlock = document.querySelector (this.container).querySelector ('.cart-items')\r\n        let str = ''\r\n        this.items.forEach (item => {\r\n            str += `<div class=\"cart-item\" data-id=\"${item.id_product}\">\r\n                    <img src=\"https://placehold.it/100x80\" alt=\"\">\r\n                    <div class=\"product-desc\">\r\n                        <p class=\"product-title\">${item.product_name}</p>\r\n                        <p class=\"product-quantity\">${item.quantity}</p>\r\n                        <p class=\"product-single-price\">${item.price}</p>\r\n                    </div>\r\n                    <div class=\"right-block\">\r\n                        <button name=\"del-btn\" class=\"del-btn\" data-id=\"${item.id_product}\">&times;</button>\r\n                    </div>\r\n                </div>`\r\n        })\r\n        itemsBlock.innerHTML = str\r\n        this.quantityBlock.innerText = this.total\r\n        this.priceBlock.innerText = this.sum\r\n    }\r\n }\r\n\r\n catalog.construct (cart) //тут происходит создание объекта и вся прочая магия\r\n cart.construct ()\r\n\r\n function app() {\r\n    console.log('Jobs done!')\r\n    catalog.construct (cart) //тут происходит создание объекта и вся прочая магия\r\n    cart.construct ()\r\n }\n\n//# sourceURL=webpack:///./src/public/js/main.js?");
+
+/***/ }),
+
+/***/ "./src/public/style/normalize.css":
+/*!****************************************!*\
+  !*** ./src/public/style/normalize.css ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/public/style/normalize.css?");
+
+/***/ }),
+
+/***/ "./src/public/style/style.css":
+/*!************************************!*\
+  !*** ./src/public/style/style.css ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/public/style/style.css?");
+
+/***/ })
+
+/******/ });
