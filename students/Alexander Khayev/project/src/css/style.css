@@ -5,7 +5,7 @@ header{
     display: flex;
     background-color: #2f2a2d;
     justify-content: space-between;
-    color: #fafafa;
+    color: #10fafa;
     padding: 30px 80px;
 }
 button:focus{
@@ -45,7 +45,7 @@ button:focus{
     grid-template-columns: repeat(auto-fit, 200px);
     grid-template-rows: 1fr;
     padding: 40px 80px;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 p {
     margin: 0 0 5px 0;
@@ -121,6 +121,12 @@ img {
     display: flex;
     justify-content: space-between;
 }
+
+.cart-items {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
 .cart-item:not(:last-child){
     margin-bottom: 20px;
 }
@@ -130,6 +136,7 @@ img {
 .cart-item img{
     align-self: flex-start;
     margin-right: 15px;
+    max-width: 37%;
 }
 .product-single-price{
     color: #474747;
