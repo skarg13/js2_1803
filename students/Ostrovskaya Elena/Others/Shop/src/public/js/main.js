@@ -5,6 +5,5 @@ import Catalog from './Catalog.js'
 
  window.addEventListener('load', function () {
    let cart = new Cart ();
-   let catalog = new Catalog();
-   catalog.cart = cart;
+   let catalog = new Catalog(cart);
 })
