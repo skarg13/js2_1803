@@ -10,7 +10,11 @@ module.exports = {
       { from: './src/static',
       to: 'static'},
       { from: './src/**/*.json',
-      to: 'api/[name].[ext]'}
+      to: 'api/[name].[ext]'},
+      { from: './src/**/*.jpg',
+        to: 'img/[name].[ext]'},
+      { from: './src/**/*.png',
+        to: 'img/[name].[ext]'}
     ]),
     new miniCss({
         filename: 'css/[name].css',
@@ -42,6 +46,6 @@ module.exports = {
   devServer: {
     open: true,
     hot: true,
-    port: 3000
+    port: 5432
   }
 }
