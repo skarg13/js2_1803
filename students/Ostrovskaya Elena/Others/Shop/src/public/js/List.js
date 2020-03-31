@@ -20,9 +20,9 @@ export default class List{
         return false;
     }
 
-    getData(){
-        return fetch(API + this.url)
-            .then(res => res.json())
+    async getData(){
+        const res = await fetch(API + this.url);
+        return await res.json();
     }
 
     /**
