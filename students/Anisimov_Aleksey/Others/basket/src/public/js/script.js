@@ -8,30 +8,12 @@ let basketTable = document.querySelector('.basket__table');
 let basketEmpty = document.querySelector('.basket__empty');
 let basketImg = document.querySelector('.basket__img');
 let counter = document.querySelector('.item__counter');
-let API_URL = 'http://localhost:63342/js2_1803/students/Anisimov_Aleksey/Others/practice'
-//let API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
-
-class Requests {
-    get(url, callback) {
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                callback(xhr.responseText);
-            }
-        };
-        xhr.open('GET', url, false);
-        xhr.send();
-    }
-    parse(data) {
-        data = JSON.parse(data);
-        return data;
-    }
-}
-
-let request = new Requests();
+//let API_URL = 'https://json.trendco.space/'
+let API_URL = 'http://127.0.0.1:5500/dist/'
 let goods = {};
-class DemoDB {
-    constructor(quantity) {
+//let API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
+/*class DataBase {
+    constructor(quantity = 6) {
         let array = [];
         for (let i=1; i <= quantity; i++) {
             let newItem = {
@@ -43,40 +25,30 @@ class DemoDB {
         }
         return array;
     }
-    makeGETRequest(url, callback) {
-        let xhr = new XMLHttpRequest();
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                callback(xhr.responseText);
-            }
-        }
-
-        xhr.open('GET', url, true);
-        xhr.send();
-    }
-}
-
-request.get(`${API_URL}/catalogData.json`, (result) => {
-    goods = JSON.parse(result);
-});
+}*/
 
 class Item {
-    buyBttnCl = '.addToCart';
-    itemCont = '.product__item';
+    constructor() {
+        this.buyBttnCl = '.addToCart'
+        this.itemCont = '.product__item'
+        //this.items = {}
+        this.url = 'goods.json'
+        this.init()
+    }
+    
     delButtons() {
-        return document.querySelectorAll('.basket__delete');
+        return document.querySelectorAll('.basket__delete')
     }
 
     render(item) {
-        return `\t\t<div class="product__item" data-id="${item.id}">
-\t\t\t<img class="product__img" src="img/no_foto.jpg" alt="${item.title}">
-\t\t\t<div class="product__desc">
-\t\t\t\t<p class="product__h2">${item.title}</p>
-\t\t\t\t<p class="product__price" data-price="${item.price}">$ ${item.price}</p>
-\t\t\t</div>
-\t\t\t<button class="addToCart" data-id="${item.id}">Купить</button>
-\t\t</div>`
+        return `<div class="product__item" data-id="${item.id}">
+                        <img class="product__img" src="img/no_foto.jpg" alt="${item.title}">
+                            <div class="product__desc">
+                                <p class="product__h2">${item.title}</p>
+                                <p class="product__price" data-price="${item.price}">$ ${item.price}</p>
+                            </div>
+                        <button class="addToCart" data-id="${item.id}">Купить</button>
+                    </div>`
     }
     renderList(arr) {
         let str = '';
@@ -96,16 +68,39 @@ class Item {
     }
 
     init() {
-        mainContainer.innerHTML = this.renderList(goods);
-        let goodsBtn = document.querySelectorAll(this.buyBttnCl);
-        this.addListener(goodsBtn, cart.actionOnBuyBtn);
-        this.addListener(basketImg, cart.emptyCart, 'mouseover');
-        this.addListener(basketImg, cart.emptyCart, 'mouseout');
+        this.getaData()
+            .then(dataResived => {goods = dataResived})
+            .then(() => {
+                mainContainer.innerHTML = this.renderList(goods)
+            })
+            .finally(() => {
+                let goodsBtn = document.querySelectorAll(this.buyBttnCl)
+                this.addListener(goodsBtn, this.actionOnBuyBtn)
+                
+            })
+        //this.getaData().then(dataResived => {this.items = dataResived})
+        //this.addListener(basketImg, cart.emptyCart, 'mouseout')
+    }
+    getaData() {
+        return fetch(API_URL + this.url) //{method: 'GET', mode: 'no-cors'}
+                    .then(res => res.json())
+    }
+    actionOnBuyBtn() {
+        cart.addItem();
+        //cart.showCart();
+        cart.counter();
     }
 }
 
 class Cart {
-    current = [];
+    constructor() {
+        this.current = []
+        
+    }
+    init() {
+        product.addListener(basketImg, cart.showCart)
+    }
+    
     addItem() {
         let currentCart = cart.current; // текущая корзина
         let currItemId = +event.target.dataset.id; // получили id товара по которому кликнули
@@ -130,17 +125,13 @@ class Cart {
         cart.current.splice(itemToDelIdIndex, 1);
         event.target.parentNode.parentNode.remove();
         if (document.querySelectorAll('.basket__table_tr').length === 1) {
-            cart.hideCart();
+            cart.hideCart()
+            cart.emptyCart()
         }
         cart.counter();
         //console.log(cart.current.length);
     }
 
-    actionOnBuyBtn() {
-        cart.addItem();
-        cart.showCart();
-        cart.counter();
-    }
     render(object, curEl) {
         let div = document.querySelector(`.basket__table_tr[data-id="${object.id}"]`); //поищем блок с таким товаром
         if (div === null) { // если нет, то добавим
@@ -173,34 +164,48 @@ class Cart {
     }
 
     showCart() {
-        if (basketTable.classList.contains('hidden')) {
-            basketTable.classList.remove('hidden');
+        if (cart.current.length === 0) {
+            cart.emptyCart()
+        } else {
+            basketTable.classList.toggle('hidden')
         }
+        
+        // if (basketTable.classList.contains('hidden')) {
+        //     basketTable.classList.remove('hidden');
+        // }
     }
     hideCart() {
         basketTable.classList.add('hidden');
     }
 
     emptyCart() {
-        if (cart.current.length === 0 && event.type === 'mouseover') {
-            basketEmpty.classList.remove('hidden');
-        //} else if (cart.current.length > 0 && event.type === 'mouseover') {
-        //    cart.showCart();
-        }
-        else{
-            basketEmpty.classList.add('hidden');
-            //cart.hideCart();
-        }
+        basketEmpty.classList.toggle('hidden')
+        // if (cart.current.length === 0 && event.type === 'mouseover') {
+        //     basketEmpty.classList.remove('hidden');
+        // //} else if (cart.current.length > 0 && event.type === 'mouseover') {
+        // //    cart.showCart();
+        // }
+        // else{
+        //     basketEmpty.classList.add('hidden');
+        //     //cart.hideCart();
+        // }
     }
 
 
 
 }
 
-let product = new Item();
-let cart = new Cart();
-product.init();
-//console.log(cart.current);
+
+let product = new Item()
+let cart = new Cart()
+cart.init()
+//product.init()
+    
+    
+
+
+
+
 
 
 
