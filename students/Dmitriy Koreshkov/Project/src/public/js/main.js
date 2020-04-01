@@ -1,5 +1,7 @@
-//ИМИТАЦИЯ РАБОТЫ БАЗЫ ДАННЫХ И СЕРВЕРА
 
+
+/*
+//ИМИТАЦИЯ РАБОТЫ БАЗЫ ДАННЫХ И СЕРВЕРА
 let PRODUCTS_NAMES = ["Processor", "Display", "Notebook", "Mouse", "Keyboard"];
 let PRICES = [100, 120, 1000, 15, 18];
 let IDS = [0, 1, 2, 3, 4];
@@ -163,3 +165,4 @@ export default function app() {
   catalog.construct(cart); //тут происходит создание объекта и вся прочая магия
   cart.construct();
 }
+*/
