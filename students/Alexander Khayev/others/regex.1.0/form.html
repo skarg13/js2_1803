@@ -11,12 +11,21 @@
       margin: 0;
     }
 
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
     .form {
       width: 300px;
     }
+
     form {
       width: 100%;
     }
+
     fieldset {
       padding: 10px;
       box-sizing: border-box;
@@ -27,6 +36,7 @@
       width: 100%;
       box-sizing: border-box;
     }
+
     label {
       box-sizing: border-box;
       display: block;
@@ -36,7 +46,8 @@
     }
 
     .warning {
-      outline: 2px solid red;
+      outline: 2px solid #ffb4b4;
+      background-color: #ff00000d;
     }
 
     .warning > .msg {
@@ -44,6 +55,7 @@
       color: red;
       font-size: 75%;
     }
+
     .msg {
       display: none;
     }
@@ -54,24 +66,24 @@
 </head>
 <body>
 <div class="form">
-<form  id="uForm">
-  <fieldset>
-    <label>Name
-      <input type="text" name="name" placeholder="без пробелов и знаков препинания"  autofocus>
-      <span class="msg"></span>
-    </label>
-    <label>Phone
-      <input type="text" name="phone" placeholder="+7(999)999-9999" >
-      <span class="msg"></span>
-    </label>
-    <label>e-mail
-      <input type="text" name="email" placeholder="name@domain.zone" >
-      <span class="msg"></span>
-    </label>
-    <textarea name="text" cols="30" rows="10"></textarea>
-  </fieldset>
+  <form id="uForm">
+    <fieldset>
+      <label>Name
+        <input type="text" name="name" placeholder="без пробелов и знаков препинания" autofocus>
+        <span class="msg"></span>
+      </label>
+      <label>Phone
+        <input type="text" name="phone" placeholder="+7(999)999-9999">
+        <span class="msg"></span>
+      </label>
+      <label>e-mail
+        <input type="text" name="email" placeholder="name@domain.zone">
+        <span class="msg"></span>
+      </label>
+      <textarea name="text" cols="30" rows="10"></textarea>
+    </fieldset>
 
-</form>
+  </form>
   <button id="okBtn">Отправить</button>
 </div>
 
@@ -80,8 +92,7 @@
   let btn = document.querySelector('#okBtn')
   btn.addEventListener('click', addUser)
 
-  function clear()
-  {
+  function clear() {
     document.querySelectorAll(".warning").forEach(item => {
       item.classList.remove("warning");
     })
@@ -96,18 +107,20 @@
     }
   }
 
+  function validateAndShowErrors(data) {
+    let valid = new Validator(data);
+    valid.errors.forEach(item => {
+      addWarning(`[name='${item.name}']`, item.msg);
+    });
+    return valid.errors.length === 0;
+  }
+
   function addUser() {
-      clear();
-      let data = getPropsInForm("#uForm");
-      let valid = new Validator(data);
-      if (valid.errors.length) {
-        valid.errors.forEach(item => {
-          addWarning(`[name='${item.name}']`, item.msg);
-        });
-      }else {
-        let user = new Person(data);
-        console.dir(user);
-      }
+    clear();
+    let data = getPropsInForm("#uForm");
+    if (validateAndShowErrors(data)) {
+      let user = new Person(data);
+    }
 
   }
 </script>
