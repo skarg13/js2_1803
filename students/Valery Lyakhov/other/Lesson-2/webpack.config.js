@@ -15,7 +15,7 @@ module.exports = {
                       },
                     },
                     'css-loader',
-                ]
+                  ],
             }
         ]
     },
@@ -26,7 +26,6 @@ module.exports = {
             ignoreOrder: false,
         }), 
         new htmlPlugin({
-            template: './src/public/index.html'
-        })
-    ]
+            template: './src/index.html'
+        })]
 }
