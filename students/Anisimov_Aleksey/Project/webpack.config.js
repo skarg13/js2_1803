@@ -1,29 +1,51 @@
-let miniCssExtractPlugin = require('mini-css-extract-plugin');
-let htmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+//const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
+    output: {
+        filename: 'js/main.js'
+      },
     module: {
         rules: [
             {
                 test: /\.css$/,
                 use: [{
-                    loader: miniCssExtractPlugin.loader,
+                    loader: MiniCssExtractPlugin.loader,
                     options: {
                         publicPath: '../',
                         hmr: process.env.NODE_ENV === 'development',
                     },
                 }, 'css-loader']
-            }
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: "babel-loader"
+                }
+              }
         ]
     },
     plugins: [
-        new miniCssExtractPlugin({
+        new MiniCssExtractPlugin({
             filename: 'css/[name].css',
             chunkFilename: '[id].css',
             ignoreOrder: false,
         }),
-        new htmlWebpackPlugin({
+        new HtmlWebpackPlugin({
             template: './src/public/index.html'
         }),
+        // new CopyWebpackPlugin([
+        //     {
+        //         from: './src/public/img',
+        //         to: './img'
+        //     },
+        //     {
+        //         from: './src/public/goods.json',
+        //         to: './goods.json',
+        //         toType: 'file'
+        //     },
+        // ]),
     ]
 }
