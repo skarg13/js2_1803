@@ -1,3 +1,4 @@
+
 let API = 'https://raw.githubusercontent.com/Niga9L/js2_1803/master/students/Ostrovskaya%20Elena/Others/basket'; // /getBasket.json
 
 class List {
@@ -36,7 +37,7 @@ class List {
         let block = document.querySelector(this.container);
         let htmlString = '';
         this.items.forEach (item => {
-           debugger
+           //debugger
             htmlString += new lists[this.constructor.name](item).render()
         });
         block.innerHTML = htmlString;
@@ -61,7 +62,7 @@ class ListItem {
                             name="buy-btn"
                             data-name="${this.item.product_name}"
                             data-price="${this.item.price}"
-                            data-id="${this.item.id_product}"
+                            data-id="${this.item.id}"
                         >Купить</button>
                     </div>
                 </div>
@@ -87,6 +88,9 @@ class Catalog extends List {
         document.querySelector (this.container).addEventListener ('click', (evt) => {
             if (evt.target.name === 'buy-btn') {
                 this.cart.addProduct (evt.target);
+                this.cart.getTotalPrice();
+                this.cart.renderPrice();
+                this.cart.renderIndex();
             }
         })
     }
@@ -94,7 +98,9 @@ class Catalog extends List {
 
 class Cart extends List {
     constructor(url, container) {
-        super(url = '/cart_product.json', container = '.cart-items')
+        super(url = '/cart_produt.json', container = '.cart-items');
+        this.cartList = {};
+        this.cartMass = [];
     }
     _init() {
         this.getData(this.url)
@@ -108,13 +114,70 @@ class Cart extends List {
         document.querySelector (this.container).addEventListener ('click', (evt) => {
             if (evt.target.name === 'del-btn') {
                 this.deleteProduct (evt.target);
+                this.getTotalPrice();
+                this.renderPrice();
+                this.renderIndex();
             }
         })
     }
-    addProduct(item) {
-        console.log('Bought: ' + item.dataset.name);
-    }
 
+    deleteProduct(item){
+
+        for(let i = 0; i < this.cartMass.length; i++) {
+            if( this.cartMass[i].id === item.dataset.id) {
+                this.cartMass.splice(i,1);
+            }
+        }
+    }
+    addProduct(item) {
+        /*if (this.cartList[item.dataset.id] === undefined){
+            this.cartList[item.dataset.id] = {
+                name: item.dataset.name,
+                price: item.dataset.price,
+                count: 1,
+
+            };
+            console.log(this.cartList);
+        } else {
+            this.cartList[item.dataset.id].count++;
+        }
+        console.log(this.cartList);*/
+
+        if (this.cartMass.find(id => id.id === item.dataset.id)){
+
+            this.cartMass.find(id => id.id === item.dataset.id).count++;
+
+        } else {
+
+            this.cartMass.push({
+                id: item.dataset.id,
+                product_name: item.dataset.name,
+                price: item.dataset.price,
+                count: 1,
+            })
+        }
+
+
+    }
+    getTotalPrice() {
+        this.totalPrice = 0;
+        this.cartMass.forEach(item =>{
+            this.totalPrice += item.price * item.count;
+        });
+
+    }
+    renderPrice() {
+        let priceBox = document.getElementById("price")
+        priceBox.innerText = this.totalPrice;
+    }
+    renderIndex(){
+        let block = document.querySelector(this.container);
+        let htmlString = '';
+        this.cartMass.forEach(item =>{
+            htmlString += new lists[this.constructor.name](item).render()
+        });
+            block.innerHTML = htmlString;
+        }
 }
 
     class CatalogItem extends ListItem {
@@ -129,15 +192,17 @@ class Cart extends List {
             this.img = 'https://placehold.it/100x80';
         }
         render() {
-            return `<div class="cart-item" data-id="${this.item.id_product}">
+            //debugger
+
+            return `<div class="cart-item" data-id="${this.item.id}">
                     <img src="${this.img}" alt="">
                     <div class="product-desc">
                         <p class="product-title">${this.item.product_name}</p>
                         <p class="product-quantity">${this.item.quantity}</p>
-                        <p class="product-single-price">${this.item.price}</p>
+                        <p class="product-single-price">${(this.item.price)*this.item.count}</p>
                     </div>
                     <div class="right-block">
-                        <button name="del-btn" class="del-btn" data-id="${this.item.id_product}">&times;</button>
+                        <button name="del-btn" class="del-btn" data-id="${this.item.id}">&times;</button>
                     </div>
                 </div>`
         }
@@ -153,5 +218,5 @@ class Cart extends List {
     let testCat = new Catalog();
     let testCrt = new Cart();
 
-    testCat.cart = testCrt
+    testCat.cart = testCrt;
 }
