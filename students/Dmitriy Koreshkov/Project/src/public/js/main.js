@@ -1,5 +1,162 @@
-//ИМИТАЦИЯ РАБОТЫ БАЗЫ ДАННЫХ И СЕРВЕРА
+let API = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses";
 
+class list {
+  // каталог и корзина (контейнер, логика)
+  constructor(url, container){
+    this.url = url;
+    this.container = container;
+    this.items =[]
+    this._init()
+  }
+  // метод упоминаем для сохранения логики (будет отдельно преназначаться)
+  _init(){
+    return false
+  }
+  getData(url) {
+    // featch запрос вместо Promise
+    return fetch(API + url).then(dataReceived => dataReceived.json())
+    // запрос промисс
+    /*
+    return new Promise((res, rej) => {
+      let xhr = new XMLHttpRequest();
+      
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+          res(xhr.responseText); 
+        } else {
+          rej(err)
+        }
+     }
+    xhr.open("GET", url, true);
+    xhr.send();
+
+    })
+    */
+  }
+  render(){
+      let block = document.querySelector(this.container)
+      let htmlString = ""
+      this.items.forEach(item => {
+        htmlString += new lists[this.constructor.name](item).render(item)       
+      });
+      block.innerHTML = htmlString
+  }
+}
+
+class ListItem {
+  //компоненты
+  render(){
+    constructor(item){ 
+      this.item = item
+      this.img = "https://placehold.it/300x200" 
+    }
+    return `
+      <div class="product-item">
+          <img src="${this.img}" alt="${this.item.product_name}">
+          <div class="desc">
+              <h1>${this.item.product_name}</h1>
+              <p>${this.item.price}</p>
+              <button 
+              class="buy-btn" 
+              name="buy-btn"
+              data-name="${this.item.product_name}"
+              data-price="${this.item.price}"
+              data-id="${this.item.id_product}"
+              >Купить</button>
+          </div>
+      </div>
+      `
+  }
+}
+
+class Catalog extends list {
+  constructor (url, container){
+    super(url = "/catalogData.json", container = ".products")
+    this.cart = null
+  }
+  _init() {
+    this.getData(this.url)
+      .then(d => {this.items = d})
+      .then(() => {this.render()})
+      .finally(() => {
+        this._handleEvents()
+      })
+  }
+
+  _handleEvents() {
+    document.querySelector(this.container).addEventListener("click", (evt) => {
+      if (evt.target.name === "buy-btn") {
+        this.cart.addProduct(evt.target);
+      }
+    });
+  }
+}
+
+class Cart extends list {
+  constructor (url, container){
+    super(url = "/getBasket.json", container = ".cart-items")
+  }
+
+  _init() {
+    this.getData(this.url)
+      .then(d => {this.items = d.contents})
+      .then(() => {this.render()})
+      .finally(() => {
+        this._handleEvents()
+      })
+  }
+
+  _handleEvents() {
+    document.querySelector(this.container).addEventListener("click", evt => {
+      if (evt.target.name === "del-btn") {
+        this.deleteProduct(evt.target);
+      }
+    });
+  }
+
+  addProduct(item){
+    console.log("bought: " + item.dataset.name)
+   }
+}
+
+class CatalogItem extends ListItem {
+
+}
+
+class CartItem extends ListItem {
+  constructor(item){
+    super(item)
+    this.img = "https://placehold.it/100x80"
+  }
+  render(){
+    return `<div class="cart-item" data-id="${this.item.id_product}">
+      <img src="${this.img}" alt="pic">
+      <div class="product-desc">
+          <p class="product-title">${this.item.product_name}</p>
+          <p class="product-quantity">${this.item.quantity}</p>
+          <p class="product-single-price">${this.item.price}</p>
+      </div>
+      <div class="right-block">
+          <button name="del-btn" class="del-btn" data-id="${item.id_product}">&times;</button>
+      </div>
+     </div>`
+  }
+}
+
+// ссылки на класс
+let lists = {
+  Catalog: CatalogItem,
+  Cart: CartItem,
+}
+export default function (){
+let test = new list("/catalog.json")
+let testCat = new Catalog()
+let testCart = new Cart()
+
+testCat.cart = testCart
+}
+/*
+//ИМИТАЦИЯ РАБОТЫ БАЗЫ ДАННЫХ И СЕРВЕРА
 let PRODUCTS_NAMES = ["Processor", "Display", "Notebook", "Mouse", "Keyboard"];
 let PRICES = [100, 120, 1000, 15, 18];
 let IDS = [0, 1, 2, 3, 4];
@@ -163,3 +320,4 @@ export default function app() {
   catalog.construct(cart); //тут происходит создание объекта и вся прочая магия
   cart.construct();
 }
+*/
