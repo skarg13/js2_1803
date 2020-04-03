@@ -1,3 +1,48 @@
+let app = new Vue({
+    el: '#app',
+    data: {
+        // State - (React)
+        //содержит набор внутренних "состояний" компонента
+        API: 'https://raw.githubusercontent.com/andykey-krsk/online-store-api/master/responses',
+        items: [],
+        cart_show: false,
+        // goods: [],
+        // filteredGoods: [],
+        // searchLine: ''
+    },
+    methods: {
+        //методы компонента - которые делают
+
+        async getData(url) {
+            try {
+               this.items = await fetch(this.API + url).then(d => d.json()) 
+            }
+            catch(err) {
+                console.log(err)
+            }
+            finally {
+                console.log(this.items)
+            }
+        }
+    },
+    computed: {
+        //вычисляемые свойства
+        // "методы", которые возвращают
+    },
+
+    //хуки жизненного цикла
+    mounted() {
+        //когда компонент монтируется в DOM
+        this.getData('/catalogData.json')
+    },
+    beforeMount() {
+        //console.log('I want to mount somewhere')
+    },
+})
+
+
+
+
 let API = 'https://raw.githubusercontent.com/andykey-krsk/online-store-api/master/responses'; 
 
 class List {
@@ -184,15 +229,13 @@ class CartItem extends ListItem {
     }
 }
 
-let lists = {
-    Catalog: CatalogItem,
-    Cart: CartItem
-}
+ let lists = {
+     Catalog: CatalogItem,
+     Cart: CartItem
+ }
 
-export default function () {
-    let test = new List('/catalogData.json')
-    let testCat = new Catalog()
-    let testCrt = new Cart()
-
-   // testCat.cart = testCrt
-}
+// export default function () {
+//      let test = new List('/catalogData.json')
+//      let testCat = new Catalog()
+//      let testCrt = new Cart()
+// }
