@@ -14,7 +14,7 @@
     <div id="app">
         <header>
             <div class="logo">E-shop</div>
-            <div class="cart">
+            <div class="cart"  id="cart">
                 <form action="#" class="search-form">
                     <input type="text" class="search-field">
                     <button class="btn-search">
@@ -40,9 +40,9 @@
             </div>
         </header>
         <main>
-            <div class="products">
+            <div class="products" id="catalog">
                 <div class="product-item" v-for ="item in items" :key="item.id">
-                    <img src="img" alt="item.product_name">
+                    <img :src="img" alt="item.product_name">
                     <div class="desc">
                         <h1>{{item.product_name}}</h1>
                         <p>{{item.price}}</p>
@@ -50,7 +50,7 @@
                         data-name="item.product_name"
                         data-price="item.price"
                         data-id="item.id_product"
-                        >Купить!!!!</button>
+                        >Купить</button>
                     </div>
                 </div>
             </div>
