@@ -2,14 +2,15 @@
 let app = new Vue({
     el: '#app',
     data: {
-        api_url: 'https://static.trendco.space/js-adv/goods.json',
+        api_url: 'https://static.trendco.space/js-adv/responses/',
         items: {},
-        isVisibleCart: false
+        cart: {},
+        isVisibleCart: false,
     },
     methods: {
-        async getData() {
+        async getData(url) {
             try {
-                this.items = await fetch(this.api_url).then(res => res.json())
+                this.items = await fetch(this.api_url + url).then(res => res.json())
             }
             catch(err) {
                 console.log(err);
@@ -20,7 +21,7 @@ let app = new Vue({
 
     },
     mounted() {
-        this.getData()
+        this.getData('goods.json')
     },
 })
 // let mainContainer = document.querySelector('.product')
