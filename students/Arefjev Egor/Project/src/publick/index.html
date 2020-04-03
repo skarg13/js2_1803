@@ -10,6 +10,7 @@
 </head>
 <body>
 <header>
+
     <div class="logo">E-shop</div>
     <div class="cart">
         <form action="#" class="search-form">
@@ -35,9 +36,31 @@
     </div>
 </header>
 <main>
-    <div class="products"></div>
+    <div id="app">
+        <div class="products">
+                <div class="post" v-for="item of items" :key="item.id">
+                    <div class="product-item">
+                        <img src="https://placehold.it/300x200" alt="заглушка">
+                        <div class="desc">
+                            <h1>{{ item.product_name }}</h1>
+                            <p>{{ item.price }}</p>
+                            <button
+                                    class="buy-btn"
+                                    name="buy-btn"
+                                    data-name="${this.item.product_name}"
+                                    data-price="${this.item.price}"
+                                    data-id="${this.item.id_product}"
+                            >Купить</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
 </main>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
 <script src="js/main.js"></script>
 </body>
