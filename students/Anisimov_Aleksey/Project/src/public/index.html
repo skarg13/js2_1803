@@ -9,6 +9,9 @@
 <body>
     <div id="app">
         <div class="header center">
+            <div class="search">
+
+            </div>
             <div class="basket">
                 <img src="https://static.trendco.space/js-adv/shopping-cart-solid.svg" alt="Cart" class="basket__img" @click="isVisibleCart = !isVisibleCart">
                 <div class="item__counter hidden"></div>
@@ -22,13 +25,12 @@
                         <div class="basket__table_th">Sub&nbsp;total</div>
                         <div class="basket__table_th">Action</div>
                     </div>
-
                 </div>
             </div>
         </div>
         <div class="product center">
             <div class="product__item" v-for="item of items" :key="item.id">
-                <img class="product__img" src="https://static.trendco.space/js-adv/no_foto.jpg" alt="{{ item.title }}">
+                <img class="product__img" src="https://static.trendco.space/js-adv/no_foto.jpg" :alt="item.title">
                 <div class="product__desc">
                     <p class="product__h2">{{ item.title }}</p>
                     <p class="product__price">$ {{ item.price }}</p>
