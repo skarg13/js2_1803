@@ -5,20 +5,35 @@ let app = new Vue({
         api_url: 'https://static.trendco.space/js-adv/responses/',
         items: {},
         cart: {},
+        searchStr: '',
+        whiteListRegExp: /[^0-9a-zа-я.-\s]/gi,
+        filteredItems: {},
         isVisibleCart: false,
     },
     methods: {
         async getData(url) {
             try {
                 this.items = await fetch(this.api_url + url).then(res => res.json())
+                this.filteredItems = this.items
             }
             catch(err) {
                 console.log(err);
             }
-        }
+        },
+        filterGoods() {
+            this.checkSearchStr()
+            let regexp = new RegExp(this.searchStr, 'i')
+            this.filteredItems = this.items.filter(good => regexp.test(good.title))
+            console.log(this.filteredItems)
+            
+        },
+        checkSearchStr() {
+            this.searchStr = (this.searchStr.trim()).replace(/\s{2,}/g, ' ')
+            this.searchStr = this.searchStr.replace(this.whiteListRegExp, '')
+        },
     },
     computed: {
-
+        
     },
     mounted() {
         this.getData('goods.json')
