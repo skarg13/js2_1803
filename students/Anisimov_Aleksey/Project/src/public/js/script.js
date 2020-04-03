@@ -6,7 +6,7 @@ let app = new Vue({
         items: {},
         cart: {},
         searchStr: '',
-        whiteListRegExp: /[^0-9a-zа-я.-\s]/gi,
+        whiteListRegExp: /[^0-9a-zа-я.-\s]/gi, //для строки поиска
         filteredItems: {},
         isVisibleCart: false,
     },
@@ -21,15 +21,13 @@ let app = new Vue({
             }
         },
         filterGoods() {
-            this.checkSearchStr()
-            let regexp = new RegExp(this.searchStr, 'i')
-            this.filteredItems = this.items.filter(good => regexp.test(good.title))
-            console.log(this.filteredItems)
-            
+            this.checkSearchStr() // приводим строку поиска к норм формату
+            let regexp = new RegExp(this.searchStr, 'i') // создали регулярку
+            this.filteredItems = this.items.filter(good => regexp.test(good.title)) // отфильтровали и записали, следом сразу рендер
         },
         checkSearchStr() {
-            this.searchStr = (this.searchStr.trim()).replace(/\s{2,}/g, ' ')
-            this.searchStr = this.searchStr.replace(this.whiteListRegExp, '')
+            this.searchStr = (this.searchStr.trim()).replace(/\s{2,}/g, ' ') // сначала тримим, потом азмена множественных пробелов на один
+            this.searchStr = this.searchStr.replace(this.whiteListRegExp, '') // тут делаем замену в строке, останутся только разрешенные символы
         },
     },
     computed: {
