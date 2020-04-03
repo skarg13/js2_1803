@@ -11,20 +11,20 @@
 <body>
     <header>
         <div class="logo">E-shop</div>
-        <div class="cart">
+        <div class="cart" id="cart">
             <form action="#" class="search-form">
                 <input type="text" class="search-field">
                 <button class="btn-search">
                     <i class="fas fa-search"></i>
                 </button>
             </form>
-            <button class="btn-cart">Cart</button>
-            <div class="cart-block ">
+            <button class="btn-cart" @click="show = !show">Cart</button>
+            <div class="cart-block "  v-show="show">
                 <div class="d-flex">
                     <strong class="d-block">Всего товаров</strong> <div id="quantity"></div>
                 </div>
                 <hr>
-                <div class="cart-items" id="cart">
+                <div class="cart-items">
                     <div class="cart-item" data-id="item.id_product"  v-for="item of items" :key="id_product">
                         <img :src="img" alt="item.product_name">
                         <div class="product-desc">

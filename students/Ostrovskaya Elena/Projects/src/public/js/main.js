@@ -28,7 +28,8 @@ let Cart = new Vue({
   data: {
     url: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json',
     items: [],
-    img:'https://placehold.it/100x80'
+    img:'https://placehold.it/100x80',
+    show: false
   },
   methods: {
     async getData() {
