@@ -1,2 +1,2 @@
-import './public/style/normalize.css'
-import './public/style/style.css'
+import './public/css/style.sass'
+import './public/js/script'
