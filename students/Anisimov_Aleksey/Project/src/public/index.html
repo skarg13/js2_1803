@@ -1,44 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/normalize.css">
-    <title>Document</title>
+    <title>Basket</title>
 </head>
 <body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart">Cart</button>
-            <div class="cart-block ">
-                <div class="d-flex">
-                    <strong class="d-block">Всего товаров</strong> <div id="quantity"></div>
-                </div>
-                <hr>
-                <div class="cart-items">
-                    
-                </div>
-                <hr>
-                <div class="d-flex">
-                    <strong class="d-block">Общая ст-ть:</strong> <div id="price"></div>
+    <div id="app">
+        <div class="header center">
+            <div class="search">
+                <input type="text" name="search" id="search" v-model='searchStr' maxlength="20" @keyup.enter='filterGoods'>
+                <button class="search__button" type="button" @click='filterGoods' >Искать</button>
+            </div>
+            <div class="basket">
+                <img src="https://static.trendco.space/js-adv/shopping-cart-solid.svg" alt="Cart" class="basket__img" @click="isVisibleCart = !isVisibleCart">
+                <div class="item__counter hidden"></div>
+                <div class="basket__empty hidden">Корзина пуста</div>
+                <div class="basket__table" v-show="isVisibleCart">
+                    <div class="basket__table_tr">
+                        <div class="basket__table_th">Picture</div>
+                        <div class="basket__table_th">Name</div>
+                        <div class="basket__table_th">Quantity</div>
+                        <div class="basket__table_th">Price</div>
+                        <div class="basket__table_th">Sub&nbsp;total</div>
+                        <div class="basket__table_th">Action</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
-    
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+        <div class="product center">
+            <div class="product__item" v-for="item of filteredItems" :key="item.id">
+                <img class="product__img" src="https://static.trendco.space/js-adv/no_foto.jpg" :alt="item.title">
+                <div class="product__desc">
+                    <p class="product__h2">{{ item.title }}</p>
+                    <p class="product__price">$ {{ item.price }}</p>
+                </div>
+                <button class="addToCart">Купить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 </body>
 </html>
