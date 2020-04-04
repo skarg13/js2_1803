@@ -6,7 +6,7 @@
                 <p class="product__h2">{{ item.title }}</p>
                 <p class="product__price">$ {{ item.price }}</p>
             </div>
-            <button class="addToCart" @click="addToCart">Купить</button>
+            <button class="addToCart">Купить</button>
         </template>
 
         <template v-if="type === 'cart'">
@@ -35,7 +35,7 @@ export default {
     },
     computed: {
         imgComputed() {
-            return `https://placehold.it/${this.type === 'catalog' ? '200x300' : '80x100'}`
+            return `https://placehold.it/${this.type === 'catalog' ? '200x200' : '80x100'}`
         }
     }
 }
