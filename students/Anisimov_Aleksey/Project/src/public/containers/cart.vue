@@ -5,7 +5,7 @@
           <p class="cart__p">Всего товаров: шт.</p>
           <hr class="cart__hr">
           
-          <item v-for="item of items" :key='item.id' />
+          <item v-for="item of items" :key='item.id' :item='item' @remove='removeFromCart' />
 
           <hr class="cart__hr">
           <p class="cart__p">Общая стоимость: $</p>
@@ -29,6 +29,9 @@ export default {
             } else {
                 this.isVisibleCart = !this.isVisibleCart
             }
+        },
+        removeFromCart(id) {
+            this.items = this.items.filter(item => item.id !== id)
         }
     },
     mounted() {

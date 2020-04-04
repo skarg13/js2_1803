@@ -16,7 +16,7 @@
                     <p class="cart__qtt">{{ item.quantity }}</p>
                     <p class="cart__price">$ {{ item.price }}</p>
                 </div>
-                <button class="cart__action">&times;</button>
+                <button class="cart__action" @click="removeItem()">&times;</button>
         </template>
     </div>
 </template>
@@ -31,6 +31,11 @@ export default {
         },
         item: {
             type: Object
+        }
+    },
+    methods: {
+        removeItem() {
+            this.$emit('remove', this.item.id)
         }
     },
     computed: {

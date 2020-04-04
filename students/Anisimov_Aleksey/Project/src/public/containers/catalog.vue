@@ -5,22 +5,28 @@
 </template>
 
 <script>
-import item from '../components/item'
+//import item from '../components/item'
 export default {
-    components: { item },
+    components: {
+        item: () => import('../components/item')
+    },
     data() {
         return {
             items: [],
-            cart: [],
             searchStr: '',
-            whiteListRegExp: /[^0-9a-zа-я.-\s]/gi, //для строки поиска
             filteredItems: [],
             url: 'https://static.trendco.space/js-adv/responses/goods.json'
         }
     },
-    // methods: {
-
-    // },
+    methods: {
+        addToCart(event) {
+            console.log(event);
+        },
+        filterGoods(string) {
+            let regexp = new RegExp(string, 'i') // создали регулярку
+            this.filteredItems = this.items.filter(good => regexp.test(good.title)) // отфильтровали и записали, следом сразу рендер
+        }
+    },
     computed: {
 
     },

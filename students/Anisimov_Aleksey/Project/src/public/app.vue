@@ -2,8 +2,8 @@
   <div>
     <div class="header center">
       <div class="search">
-        <input type="text" name="search" id="search" v-model="searchStr" maxlength="20" @keyup.enter="filterGoods" />
-        <button class="search__button" type="button" @click="filterGoods($event)">Искать</button>
+        <input type="text" v-model="searchStr" maxlength="20" @keyup.enter="checkSearchStr" />
+        <button class="search__button" type="button" @click="checkSearchStr">Искать</button>
       </div>
       
       <cart ref="cartRef" />
@@ -17,29 +17,27 @@
 </template>
 
 <script>
-import catalog from './containers/catalog'
-import cart from './containers/cart'
+//import catalog from './containers/catalog'
+//import cart from './containers/cart'
 export default {
     components: {
-      catalog,
-      cart
+      catalog: () => import('./containers/catalog'),
+      cart: () => import('./containers/cart')
+    },
+    data() {
+      return  {
+        searchStr: '',
+        whiteListRegExp: /[^0-9a-zа-я.-\s]/gi, //для строки поиска
+      }
     },
     methods: {
       getData(url) {
         return fetch(url).then(dataResived => dataResived.json())
       },
-      filterGoods(event) {
-        this.checkSearchStr() // приводим строку поиска к норм формату
-        let regexp = new RegExp(this.searchStr, 'i') // создали регулярку
-        this.filteredItems = this.items.filter(good => regexp.test(good.title)) // отфильтровали и записали, следом сразу рендер
-      },
-      checkSearchStr() {
-        this.searchStr = (this.searchStr.trim()).replace(/\s{2,}/g, ' ') // сначала тримим, потом азмена множественных пробелов на один
-        this.searchStr = this.searchStr.replace(this.whiteListRegExp, '') // тут делаем замену в строке, останутся только разрешенные символы
-      },
-      addToCart(event) {
-        console.log(event);
-          
+      checkSearchStr() { // приводим строку поиска к норм формату
+            this.searchStr = (this.searchStr.trim()).replace(/\s{2,}/g, ' ') // сначала тримим, потом азмена множественных пробелов на один
+            this.searchStr = this.searchStr.replace(this.whiteListRegExp, '') // тут делаем замену в строке, останутся только разрешенные символы
+            this.$refs.catalogRef.filterGoods(this.searchStr)
       }
     }
 };
