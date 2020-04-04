@@ -1,12 +1,11 @@
 <template>
     <div class="product center">
-        <item />
-
+        <item v-for="item of items" :key="item.id" :item='item' />
     </div>
 </template>
 
 <script>
-import item from '../components/item.vue'
+import item from '../components/item'
 export default {
     components: {item},
     data() {
@@ -15,12 +14,12 @@ export default {
             url: 'https://static.trendco.space/js-adv/responses/goods.json'
         }
     },
-    methods: {
+    // methods: {
 
-    },
-    computed: {
+    // },
+    // computed: {
 
-    },
+    // },
     mounted() {
         this.$parent.getData(url)
             .then(data => this.items = data)

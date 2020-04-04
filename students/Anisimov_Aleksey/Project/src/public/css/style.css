@@ -24,6 +24,10 @@
           justify-content: flex-end;
 }
 
+.search {
+  margin-right: 20px;
+}
+
 .product {
   margin-top: 30px;
   display: -webkit-box;
