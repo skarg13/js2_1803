@@ -6,7 +6,7 @@
                 <p class="product__h2">{{ item.title }}</p>
                 <p class="product__price">$ {{ item.price }}</p>
             </div>
-            <button class="addToCart">Купить</button>
+            <button class="addToCart" @click="addItem(item)">Купить</button>
         </template>
 
         <template v-if="type === 'cart'">
@@ -16,7 +16,7 @@
                     <p class="cart__qtt">{{ item.quantity }}</p>
                     <p class="cart__price">$ {{ item.price }}</p>
                 </div>
-                <button class="cart__action" @click="removeItem()">&times;</button>
+                <button class="cart__action" @click="removeItem(item)">&times;</button>
         </template>
     </div>
 </template>
@@ -31,11 +31,15 @@ export default {
         },
         item: {
             type: Object
-        }
+        },
+
     },
     methods: {
-        removeItem() {
-            this.$emit('remove', this.item.id)
+        addItem (item) {
+            this.$emit('add', item)
+        },
+        removeItem(item) {
+            this.$emit('remove', item)
         }
     },
     computed: {

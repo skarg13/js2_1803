@@ -20,6 +20,7 @@
 //import catalog from './containers/catalog'
 //import cart from './containers/cart'
 export default {
+    name: 'App',
     components: {
       catalog: () => import('./containers/catalog'),
       cart: () => import('./containers/cart')

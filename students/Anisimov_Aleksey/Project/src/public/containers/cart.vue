@@ -5,7 +5,7 @@
           <p class="cart__p">Всего товаров: шт.</p>
           <hr class="cart__hr">
           
-          <item v-for="item of items" :key='item.id' :item='item' @remove='removeFromCart' />
+          <item v-for="item of this.items" :key='item.id' :item='item' type='cart' @remove='removeFromCart'/>
 
           <hr class="cart__hr">
           <p class="cart__p">Общая стоимость: $</p>
@@ -15,6 +15,9 @@
 
 <script>
 export default {
+    components: {
+        item: () => import('../components/item')
+    },
     data() {
         return {
             items: [],
@@ -23,18 +26,21 @@ export default {
         }
     },
     methods: {
+        
         checkCart() {
-            if (this.items) {
+            if (this.items.length === 0) {
                 this.isEmptyCart = !this.isEmptyCart
             } else {
                 this.isVisibleCart = !this.isVisibleCart
             }
         },
-        removeFromCart(id) {
-            this.items = this.items.filter(item => item.id !== id)
-        }
+        
+        removeFromCart(el) {
+            this.items = this.items.filter(item => item.id !== el.id)
+        },
+        
     },
-    mounted() {
+    computed: {
         
     }
     

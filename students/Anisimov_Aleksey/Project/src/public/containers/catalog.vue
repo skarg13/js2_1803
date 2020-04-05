@@ -1,6 +1,6 @@
 <template>
     <div class="product center">
-        <item v-for="item of filteredItems" :key="item.id" :item='item' />
+        <item v-for="item of filteredItems" :key="item.id" :item='item' @add='addToCart' />
     </div>
 </template>
 
@@ -19,12 +19,16 @@ export default {
         }
     },
     methods: {
-        addToCart(event) {
-            console.log(event);
+        addToCart(data) {
+            this.$parent.$refs.cartRef.items.push(data)
+            
         },
         filterGoods(string) {
             let regexp = new RegExp(string, 'i') // создали регулярку
             this.filteredItems = this.items.filter(good => regexp.test(good.title)) // отфильтровали и записали, следом сразу рендер
+        },
+        isItemInCart(el) {
+            return this.items.includes(item => item.id === el.id)
         }
     },
     computed: {
