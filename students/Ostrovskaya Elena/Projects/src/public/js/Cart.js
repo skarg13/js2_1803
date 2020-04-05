@@ -87,6 +87,8 @@ export default class Cart extends List{
         if (find) {
             find.quantity++;
         } else {
+
+
             let prod = this._createNewProduct (product);
             this.items.push (prod);
         }      
@@ -95,7 +97,7 @@ export default class Cart extends List{
 
     /**
      *Возвращает массив с параметрами товара
-     *
+     *$root.$children[0].$refs.cart.addToCart(item)
      */
     _createNewProduct (prod) {
         return {

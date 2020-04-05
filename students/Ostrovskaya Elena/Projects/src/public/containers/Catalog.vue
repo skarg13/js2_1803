@@ -1,6 +1,6 @@
 <template>
     <div class="products" id="catalog">
-         <item v-for="item of items" :key="item.id_product"  :item="item"/>       
+         <item v-for="item of showItem" :key="item.id_product"  :item="item"/>       
     </div>
 </template>
 
@@ -10,14 +10,22 @@ export default {
     components: {item},
     data() {
         return{
+            name: "catalog",
+            showItem: [],
             items: [],
             url:'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json '
+        }
+    },
+    methods:{
+        setShowItems(search){
+            this.showItem = this.items.filter(item => search == "" || item.product_name.toLowerCase().includes(search))
         }
     },
     mounted(){
         this.$parent.getData(this.url)
         .then(data => {
             this.items = data;
+            this.showItem = data;
         })
     }
 }
