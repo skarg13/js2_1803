@@ -20,7 +20,21 @@ export default {
     },
     methods: {
         addToCart(data) {
-            this.$parent.$refs.cartRef.items.push(data)
+            let tempCart = this.$parent.$refs.cartRef.items
+            let currItem = tempCart.find(item => item.id === data.id)
+            if (currItem === undefined) {
+                tempCart.push({
+                    id: data.id,
+                    title: data.title,
+                    quantity: 1,
+                    price: data.price,
+                    summ: data.price
+                })
+            } else {
+                currItem.quantity++
+                currItem.summ = currItem.quantity * currItem.price
+            }
+            
             
         },
         filterGoods(string) {

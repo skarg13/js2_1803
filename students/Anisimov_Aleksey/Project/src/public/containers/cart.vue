@@ -10,7 +10,7 @@
           <item v-for="item of this.items" :key='item.id' :item='item' type='cart' @remove='removeFromCart'/>
 
           <hr class="cart__hr">
-          <p class="cart__p">Общая стоимость: $</p>
+          <p class="cart__p">Общая стоимость: ${{ totalCartSUmm }}</p>
         </div>
     </div>
 </template>
@@ -57,7 +57,18 @@ export default {
     },
     computed: {
         totalCartItems() {
-            return this.items.length
+            let totalQtt = null
+            this.items.forEach(element => {
+                totalQtt += element.quantity
+            });
+            return totalQtt
+        },
+        totalCartSUmm() {
+            let totalSumm = null
+            this.items.forEach(element => {
+                totalSumm += element.summ
+            });
+            return totalSumm
         }
     },
     updated() {

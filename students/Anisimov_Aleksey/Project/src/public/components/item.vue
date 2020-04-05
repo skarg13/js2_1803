@@ -13,8 +13,9 @@
             <img :src="imgComputed" :alt="item.title">
                 <div class="cart__desc">
                     <p class="cart__title">{{ item.title }}</p>
-                    <p class="cart__qtt">{{ item.quantity }}</p>
-                    <p class="cart__price">$ {{ item.price }}</p>
+                    <p class="cart__qtt">Qtt: {{ item.quantity }}</p>
+                    <p class="cart__price">Price $ {{ item.price }}</p>
+                    <p class="cart__summ">Total $ {{ item.summ }}</p>
                 </div>
                 <button class="cart__action" @click="removeItem(item)">&times;</button>
         </template>
