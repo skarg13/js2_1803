@@ -10,7 +10,8 @@
     <div id="app">
         <div class="header center">
             <div class="search">
-
+                <input type="text" name="search" id="search" v-model='searchStr' maxlength="20" @keyup.enter='filterGoods'>
+                <button class="search__button" type="button" @click='filterGoods' >Искать</button>
             </div>
             <div class="basket">
                 <img src="https://static.trendco.space/js-adv/shopping-cart-solid.svg" alt="Cart" class="basket__img" @click="isVisibleCart = !isVisibleCart">
@@ -29,7 +30,7 @@
             </div>
         </div>
         <div class="product center">
-            <div class="product__item" v-for="item of items" :key="item.id">
+            <div class="product__item" v-for="item of filteredItems" :key="item.id">
                 <img class="product__img" src="https://static.trendco.space/js-adv/no_foto.jpg" :alt="item.title">
                 <div class="product__desc">
                     <p class="product__h2">{{ item.title }}</p>
