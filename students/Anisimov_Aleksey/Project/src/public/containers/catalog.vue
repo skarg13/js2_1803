@@ -26,9 +26,6 @@ export default {
         filterGoods(string) {
             let regexp = new RegExp(string, 'i') // создали регулярку
             this.filteredItems = this.items.filter(good => regexp.test(good.title)) // отфильтровали и записали, следом сразу рендер
-        },
-        isItemInCart(el) {
-            return this.items.includes(item => item.id === el.id)
         }
     },
     computed: {
