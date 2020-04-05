@@ -22,11 +22,13 @@
           <i class="fas fa-search"></i>
         </button>
       </form>
-      <button class="btn-cart">{{ cartTitle }}</button>
-      <div class="cart-block" v-if="cartItems.length <= 0">
+      <button class="btn-cart"  @click="show = !show">{{ cartTitle }}</button>
+      <transition name="fade">
+      <div class="cart-block" v-if="cartItems.length <= 0 && show">
         <h3>Нет данных</h3>
       </div>
-      <div class="cart-block" v-if="cartItems.length > 0">
+      <div class="cart-block" v-if="cartItems.length > 0 && show">
+
         <div class="d-flex">
           <strong class="d-block">{{ cartTotalItems }}</strong>
           <div id="quantity"></div>
@@ -34,7 +36,7 @@
         <hr>
         <div class="cart-items" >
 
-          <div class="cart-item" :data-id="item.id_product" v-for="item in cartItems">
+          <div class="cart-item" :data-id="item.id_product" v-for="item in cartItems" :key="item.id_product">
             <img :src="item.img" alt="">
             <div class="product-desc">
               <p class="product-title">{{ item.product_name }}</p>
@@ -51,17 +53,19 @@
           </div>
 
         </div>
+
         <hr>
         <div class="d-flex">
           <strong class="d-block">{{ cartTotalPrice }}</strong>
           <div id="price"></div>
         </div>
       </div>
+      </transition>
     </div>
   </header>
   <main>
     <div class="products">
-      <div class="product-item" v-for="item in catalog.showItems">
+      <div class="product-item" v-for="item in catalog.showItems" :key="item.id_product">
         <div class="product-item">
           <img :src="item.img" width="300" height="200" :alt="item.product_name">
           <div class="desc">
