@@ -33,13 +33,16 @@ export default {
         getData(url) {  
             return  fetch(url).then(dataReceived => dataReceived.json())
         },
-        addData (url, obj) {
+        /*addData (url, obj) {
             return fetch(url, {
                 method: 'POST',
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(obj)
             }).then(d => d.json())
-        },
+        },*/
+        addData(url){
+            
+        }
     }
 }
 </script>
