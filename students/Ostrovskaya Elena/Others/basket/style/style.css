@@ -17,11 +17,9 @@
   .product__img {
     width: 100%; }
   .product__button {
-    display: block;
     border: 2px solid #e24f63;
     padding: 5px 15px;
     width: 150px;
-    background-color: white;
     text-align: center;
     margin: 0 auto;
     border-radius: 15px;
@@ -98,8 +96,7 @@
     width: 100px;
     height: 100px;
     border: 2px solid #ccc4c4;
-    margin: 6px;
-    font-size: 14px; }
+    margin: 6px; }
   .goods__text {
     padding: 10px;
     height: 100px;
