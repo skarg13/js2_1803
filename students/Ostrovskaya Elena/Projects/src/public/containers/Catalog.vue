@@ -13,7 +13,8 @@ export default {
             name: "catalog",
             showItem: [],
             items: [],
-            url:'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json '
+            url: '/api/catalog.json',
+            //url:'https://raw.githubusercontent.com/Ostrovskaya/js2_1803/master/students/Ostrovskaya%20Elena/Projects/src/public/api/catalog.json '
         }
     },
     methods:{

@@ -30,19 +30,24 @@ export default {
     },
     components: {catalog, cart},
     methods: {
+
+        //Пока у нас нет сервера, а есть ток заглушка будет одинаково, но ограничиватся одним методом не стала
         getData(url) {  
-            return  fetch(url).then(dataReceived => dataReceived.json())
+            return  fetch(url).then(data => data.json())
         },
-        /*addData (url, obj) {
+        postData (url, obj) {
             return fetch(url, {
                 method: 'POST',
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(obj)
-            }).then(d => d.json())
-        },*/
-        addData(url){
-            
-        }
+            }).then(data => data.json())
+        },
+        addData(url) {  
+            return  fetch(url).then(data => data.json())
+        },
+        deleteData(url) {  
+            return  fetch(url).then(data => data.json())
+        },
     }
 }
 </script>
