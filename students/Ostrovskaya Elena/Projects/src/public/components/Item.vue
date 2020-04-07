@@ -5,7 +5,7 @@
             <div class="desc">
                 <h1>{{ item.product_name }}</h1>
                 <p>{{ item.price }}</p>
-                <button class="buy-btn" @click="$root.$children[0].$children[0].addProduct(item)" >Купить</button>
+                <button class="buy-btn" @click="$root.$children[0].$refs.cart.addProduct(item)" >Купить</button>
             </div>
         </template>
         
@@ -17,7 +17,7 @@
                 <p class="product-single-price">{{item.price}}</p>
             </div>
             <div class="right-block">
-                <button name="del-btn" class="del-btn" data-id="item.id_product"  @click="$root.$children[0].$children[0].deleteProduct(item)">&times;</button>
+                <button name="del-btn" class="del-btn" data-id="item.id_product"  @click="$root.$children[0].$refs.cart.deleteProduct(item)">&times;</button>
             </div>
         </template>
     </div>
@@ -44,6 +44,6 @@ export default {
         imgCompute() {
             return `https://placehold.it/${this.type === 'catalog' ? '300x200' : '100x80'}`
         }
-    }
+    },
 }
 </script>

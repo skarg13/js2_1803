@@ -36,6 +36,7 @@ export default {
     },
     methods:{
         addProduct (product) {
+            console.log("add")
             let id = product.id_product
             let find = this.items.find (product => product.id_product === id);
             let obj = Object.assign ({}, product, {quantity: 1});
