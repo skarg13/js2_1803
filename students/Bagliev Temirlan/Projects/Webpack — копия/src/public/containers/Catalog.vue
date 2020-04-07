@@ -13,8 +13,7 @@ export default {
             name: "catalog",
             showItem: [],
             items: [],
-            url: '/api/catalog.json',
-            //url:'https://raw.githubusercontent.com/Ostrovskaya/js2_1803/master/students/Ostrovskaya%20Elena/Projects/src/public/api/catalog.json '
+            url:'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json '
         }
     },
     methods:{
@@ -30,4 +29,4 @@ export default {
         })
     }
 }
-</script>
+</script> 

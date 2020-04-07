@@ -34,16 +34,25 @@
 <script>
 //add packages (imports)
 import catalog from './containers/Catalog.vue'
+import cart from './containers/Cart.vue'
 export default {
-    components: { catalog },
-    methods: {
-        getData(url) {
-            return fetch(url).then(dataReceived => dataReceived.json())
+    data(){
+        return{
+            search: ""
         }
+    },
+    components: {catalog, cart},
+    methods: {
+        getData(url) {  
+            return  fetch(url).then(dataReceived => dataReceived.json())
+        },
+        addData (url, obj) {
+            return fetch(url, {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(obj)
+            }).then(d => d.json())
+        },
     }
 }
 </script>
-
-<style>
-
-</style>
