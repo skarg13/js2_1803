@@ -28,12 +28,18 @@
     },
     methods: {
       getData(url) {
-        return fetch('/api/' + url)
+        return fetch('/api' + url)
           .then(data => data.json())
           .catch(e => this._dialog('Не удалось загрузить данные'));
       },
       putData(url, obj) {
-        return fetch('/api/' + url)
+        return fetch('/api' + url, {
+          // method: 'POST',
+          // headers: {
+          //   'Content-Type': "application/json"
+          // },
+          // body: JSON.stringify(obj),
+        })
           .then(data => data.json())
           .catch(e => this._dialog('Не удалось загрузить данные'));
       },

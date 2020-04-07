@@ -58,13 +58,19 @@
     methods: {
       _deleteFromCart(event) {
         let obj = this._findItem(event.target.dataset.id);
-        console.dir(obj);
-        if (obj.quantity > 1) {
-          obj.quantity--;
-          this._rerender();
-        } else {
-          this.cartItems.splice(this.cartItems.indexOf(obj), 1);
-        }
+        this.$parent.putData("/deleteFromBasket.json", obj)
+        .then(res => {
+          if (1 === res.result) {
+            if (obj.quantity > 1) {
+              obj.quantity--;
+              this._rerender();
+            } else {
+              this.cartItems.splice(this.cartItems.indexOf(obj), 1);
+            }
+          }else {
+            throw Error('Error delete item');
+          }
+        })
       },
       _initData() {
         this.$parent.getData("/getBasket.json")
