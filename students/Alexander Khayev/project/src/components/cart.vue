@@ -103,7 +103,8 @@
         return this.cartItems.find(product => +product.id_product === +id);
       },
       _rerender() {
-        this.cartItems = this.cartItems.filter(() => true);
+        this.$forceUpdate();
+        //this.cartItems = this.cartItems.filter(() => true);
       }
     },
   }
