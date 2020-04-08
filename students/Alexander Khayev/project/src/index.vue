@@ -1,7 +1,9 @@
 <template>
   <div>
+    <showDialog componentRef="showDialog" ref="showDialog" v-show="dialogShow"></showDialog>
     <header>
       <logo-menu :value="companyName"></logo-menu>
+      <button @click="showDialog('Проверка модального окна')">Show modal window</button>
       <div class="cart">
         <search-menu v-model="searchString"></search-menu>
         <button class="btn-cart" @click="show = !show">Cart</button>
@@ -18,9 +20,11 @@
 
 <script>
 
+
   export default {
     name: "app",
     components: {
+      "showDialog": () => import('./components/showDialog.vue'),
       "logo-menu": () => import('./components/logo-menu.vue'),
       "search-menu": () => import('./components/search-menu.vue'),
       "cart": () => import('./components/cart.vue'),
@@ -28,9 +32,14 @@
     },
     methods: {
       getData(url) {
-        return fetch('/api' + url)
+        // тут мы для демонстрации появления окна при ошибке генерим ошибку с вероятностью 1/2
+        return fetch('/api' + url
+          //+ (Math.random() > 0.5 ? "": "error")
+        )
           .then(data => data.json())
-          .catch(e => this._dialog('Не удалось загрузить данные'));
+          .catch(e => {
+            this.showDialog('Не удалось загрузить данные');
+          })
       },
       putData(url, obj) {
         return fetch('/api' + url, {
@@ -41,21 +50,32 @@
           // body: JSON.stringify(obj),
         })
           .then(data => data.json())
-          .catch(e => this._dialog('Не удалось загрузить данные'));
+          .catch(e => this.showDialog('Не удалось загрузить данные'));
       },
-      _dialog(msg) {
-        alert(msg);
+      showDialog(msg) {
+        this.$refs.showDialog.$data.value = msg;
+        // setTimeout(() => {
+          this.dialogShow = true;
+        // }, 0);
+        //alert(msg);
       },
-    },
+    }
+    ,
     data: function () {
       return {
         show: true,
+        dialogShow: false,
         searchString: "",
         companyName: 'Mini-Super :)',
       }
-    },
+    }
+    ,
     mounted() {
-    },
+      this.$root.$on("closeModal", () => {
+        this.dialogShow = false
+      })
+    }
+    ,
   }
 </script>
 
